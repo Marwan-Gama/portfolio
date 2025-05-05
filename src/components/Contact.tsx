@@ -101,7 +101,7 @@ const Contact = () => {
               textShadow: "2px 2px 4px rgba(0,0,0,0.1)",
             }}
           >
-            Get in Touch
+            Let's Work Together!
           </Typography>
 
           <Box
