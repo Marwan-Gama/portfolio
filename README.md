@@ -53,25 +53,92 @@ src/
 2. Install dependencies:
 
    ```bash
-   npm install
+   npm install --legacy-peer-deps
    ```
 
 3. Start the development server:
 
    ```bash
-   npm start
+   npm run dev
    ```
 
 4. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-## 📱 Responsive Design
+## 🚀 Deployment
 
-The portfolio is designed to be fully responsive and works on:
+### Prerequisites
 
-- Mobile devices
-- Tablets
-- Desktop computers
-- Large screens
+- Node.js (v16 or higher)
+- npm or yarn
+- Vercel CLI (`npm install -g vercel`)
+
+### Deployment Options
+
+#### Option 1: Using the Deployment Script (Recommended)
+
+1. Make the script executable:
+   ```bash
+   chmod +x deploy.sh
+   ```
+2. Run the deployment script:
+   ```bash
+   ./deploy.sh
+   ```
+
+#### Option 2: Manual Deployment
+
+1. Clean previous builds:
+   ```bash
+   npm run clean
+   ```
+2. Install dependencies:
+   ```bash
+   npm install --legacy-peer-deps
+   ```
+3. Build the project:
+   ```bash
+   npm run build
+   ```
+4. Deploy to Vercel:
+   ```bash
+   vercel --prod
+   ```
+
+#### Option 3: Using npm Scripts
+
+1. Clean and build:
+   ```bash
+   npm run predeploy
+   ```
+2. Deploy:
+   ```bash
+   npm run deploy
+   ```
+
+## 📦 Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run lint` - Run ESLint
+- `npm run clean` - Clean build artifacts
+- `npm run deploy` - Deploy to production
+
+## 🔧 Configuration
+
+The project uses the following configuration files:
+
+- `vercel.json` - Vercel deployment configuration
+- `tsconfig.json` - TypeScript configuration
+- `vite.config.ts` - Vite configuration
+
+## 📝 Notes
+
+- The project is configured for optimal performance with caching and compression
+- All static assets are cached for 1 year
+- Security headers are properly configured
+- The build process is optimized for production
+- Material-UI icons are properly configured for production builds
 
 ## 🔗 Links
 
@@ -88,3 +155,12 @@ For professional inquiries, please reach out via:
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 📱 Responsive Design
+
+The portfolio is designed to be fully responsive and works on:
+
+- Mobile devices
+- Tablets
+- Desktop computers
+- Large screens

@@ -7,8 +7,14 @@ export default defineConfig({
   build: {
     outDir: "dist",
     sourcemap: true,
+    rollupOptions: {
+      external: ["@mui/icons-material"],
+    },
   },
   server: {
     port: 3000,
+  },
+  optimizeDeps: {
+    include: ["@mui/icons-material"],
   },
 });
