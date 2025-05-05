@@ -9,8 +9,8 @@ import {
   Alert,
 } from "@mui/material";
 import { motion } from "framer-motion";
-import * as Icons from "@mui/icons-material";
-import { useState } from "react";
+import { LinkedIn, GitHub, Email, WhatsApp } from "@mui/icons-material";
+import { useState, useCallback, useMemo } from "react";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -23,61 +23,66 @@ const Contact = () => {
     "success"
   );
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-  ) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      const { name, value } = e.target;
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+      }));
+    },
+    []
+  );
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // Here you would typically send the form data to your backend
-    // For now, we'll just show a success message
-    if (formData.name && formData.email && formData.message) {
-      setMessageType("success");
-      setShowMessage(true);
-      setFormData({ name: "", email: "", message: "" });
-    } else {
-      setMessageType("error");
-      setShowMessage(true);
-    }
-  };
+  const handleSubmit = useCallback(
+    (e: React.FormEvent) => {
+      e.preventDefault();
+      if (formData.name && formData.email && formData.message) {
+        setMessageType("success");
+        setShowMessage(true);
+        setFormData({ name: "", email: "", message: "" });
+      } else {
+        setMessageType("error");
+        setShowMessage(true);
+      }
+    },
+    [formData]
+  );
 
-  const socialLinks = [
-    {
-      icon: <Icons.LinkedIn />,
-      label: "LinkedIn",
-      url: "https://www.linkedin.com/in/marwan-gama/",
-      color: "#0077B5",
-      description:
-        "Connect with me on LinkedIn to discuss opportunities and collaborations",
-    },
-    {
-      icon: <Icons.GitHub />,
-      label: "GitHub",
-      url: "https://github.com/Marwan-Gama",
-      color: "#333",
-      description: "Check out my open-source projects and contributions",
-    },
-    {
-      icon: <Icons.Email />,
-      label: "Email",
-      url: "mailto:marwan.dev2@gmail.com",
-      color: "#D44638",
-      description: "Get in touch for professional inquiries",
-    },
-    {
-      icon: <Icons.WhatsApp />,
-      label: "WhatsApp",
-      url: "https://wa.me/972505519999",
-      color: "#25D366",
-      description: "Message me directly on WhatsApp",
-    },
-  ];
+  const socialLinks = useMemo(
+    () => [
+      {
+        icon: <LinkedIn />,
+        label: "LinkedIn",
+        url: "https://www.linkedin.com/in/marwan-gama/",
+        color: "#0077B5",
+        description:
+          "Connect with me on LinkedIn to discuss opportunities and collaborations",
+      },
+      {
+        icon: <GitHub />,
+        label: "GitHub",
+        url: "https://github.com/Marwan-Gama",
+        color: "#333",
+        description: "Check out my open-source projects and contributions",
+      },
+      {
+        icon: <Email />,
+        label: "Email",
+        url: "mailto:marwan.dev2@gmail.com",
+        color: "#D44638",
+        description: "Get in touch for professional inquiries",
+      },
+      {
+        icon: <WhatsApp />,
+        label: "WhatsApp",
+        url: "https://wa.me/972505519999",
+        color: "#25D366",
+        description: "Message me directly on WhatsApp",
+      },
+    ],
+    []
+  );
 
   return (
     <Box
@@ -332,7 +337,6 @@ const Contact = () => {
         </motion.div>
       </Container>
 
-      {/* Message Display */}
       <Snackbar
         open={showMessage}
         autoHideDuration={6000}

@@ -6,12 +6,20 @@ export default defineConfig({
   plugins: [react()],
   build: {
     outDir: "dist",
-    sourcemap: true,
+    sourcemap: false,
+    minify: "terser",
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+      },
+    },
     rollupOptions: {
-      external: ["@mui/icons-material"],
       output: {
-        globals: {
-          "@mui/icons-material": "MuiIcons",
+        manualChunks: {
+          "react-vendor": ["react", "react-dom", "react-router-dom"],
+          "mui-vendor": ["@mui/material", "@mui/icons-material"],
+          "framer-vendor": ["framer-motion"],
         },
       },
     },
@@ -21,10 +29,6 @@ export default defineConfig({
   },
   optimizeDeps: {
     include: ["@mui/icons-material"],
-    esbuildOptions: {
-      define: {
-        global: "globalThis",
-      },
-    },
+    exclude: ["@mui/icons-material/LinkedIn"],
   },
 });
