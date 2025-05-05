@@ -9,10 +9,7 @@ import {
   Alert,
 } from "@mui/material";
 import { motion } from "framer-motion";
-import LinkedInIcon from "@mui/icons-material/LinkedIn";
-import GitHubIcon from "@mui/icons-material/GitHub";
-import EmailIcon from "@mui/icons-material/Email";
-import WhatsAppIcon from "@mui/icons-material/WhatsApp";
+import * as Icons from "@mui/icons-material";
 import { useState } from "react";
 
 const Contact = () => {
@@ -52,7 +49,7 @@ const Contact = () => {
 
   const socialLinks = [
     {
-      icon: <LinkedInIcon />,
+      icon: <Icons.LinkedIn />,
       label: "LinkedIn",
       url: "https://www.linkedin.com/in/marwan-gama/",
       color: "#0077B5",
@@ -60,21 +57,21 @@ const Contact = () => {
         "Connect with me on LinkedIn to discuss opportunities and collaborations",
     },
     {
-      icon: <GitHubIcon />,
+      icon: <Icons.GitHub />,
       label: "GitHub",
       url: "https://github.com/Marwan-Gama",
       color: "#333",
       description: "Check out my open-source projects and contributions",
     },
     {
-      icon: <EmailIcon />,
+      icon: <Icons.Email />,
       label: "Email",
       url: "mailto:marwan.dev2@gmail.com",
       color: "#D44638",
       description: "Get in touch for professional inquiries",
     },
     {
-      icon: <WhatsAppIcon />,
+      icon: <Icons.WhatsApp />,
       label: "WhatsApp",
       url: "https://wa.me/972505519999",
       color: "#25D366",
