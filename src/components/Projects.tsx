@@ -104,9 +104,11 @@ const Projects = () => {
                       backdropFilter: "blur(10px)",
                       borderRadius: 3,
                       boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
-                      transition: "transform 0.3s ease",
+                      transition: "transform 0.2s ease",
+                      willChange: "transform",
+                      transform: "translateZ(0)",
                       "&:hover": {
-                        transform: "translateY(-8px)",
+                        transform: "translateY(-4px)",
                       },
                     }}
                   >

@@ -43,6 +43,8 @@ const Navbar = () => {
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             fontSize: { xs: "1.2rem", sm: "1.5rem" },
+            willChange: "transform, opacity",
+            transform: "translateZ(0)",
           }}
         >
           Marwan Abu Gama
@@ -59,6 +61,8 @@ const Navbar = () => {
                 color: location.pathname === item.path ? "#1976D2" : "#666",
                 fontWeight: location.pathname === item.path ? "bold" : "normal",
                 position: "relative",
+                willChange: "transform",
+                transform: "translateZ(0)",
                 "&::after": {
                   content: '""',
                   position: "absolute",
@@ -67,7 +71,7 @@ const Navbar = () => {
                   width: location.pathname === item.path ? "100%" : "0%",
                   height: "2px",
                   background: "linear-gradient(45deg, #2196F3, #1976D2)",
-                  transition: "width 0.3s ease",
+                  transition: "width 0.2s ease",
                 },
                 "&:hover::after": {
                   width: "100%",

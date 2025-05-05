@@ -40,24 +40,26 @@ const Home = () => {
       }}
     >
       {/* Floating particles background */}
-      {[...Array(20)].map((_, i) => (
+      {[...Array(10)].map((_, i) => (
         <motion.div
           key={i}
           style={{
             position: "absolute",
-            width: "10px",
-            height: "10px",
+            width: "8px",
+            height: "8px",
             background: "rgba(33, 150, 243, 0.2)",
             borderRadius: "50%",
             left: `${Math.random() * 100}%`,
             top: `${Math.random() * 100}%`,
+            willChange: "transform, opacity",
+            transform: "translateZ(0)",
           }}
           animate={{
-            y: [0, -100, 0],
+            y: [0, -50, 0],
             opacity: [0.2, 0.8, 0.2],
           }}
           transition={{
-            duration: Math.random() * 3 + 2,
+            duration: Math.random() * 2 + 1,
             repeat: Infinity,
             ease: "easeInOut",
           }}

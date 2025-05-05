@@ -106,6 +106,7 @@ const About = () => {
               <motion.span
                 animate={{ rotate: 360 }}
                 transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                style={{ willChange: "transform", transform: "translateZ(0)" }}
               >
                 🌟
               </motion.span>{" "}
@@ -159,6 +160,7 @@ const About = () => {
               <motion.span
                 animate={{ rotate: 360 }}
                 transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                style={{ willChange: "transform", transform: "translateZ(0)" }}
               >
                 💻
               </motion.span>{" "}
@@ -223,6 +225,10 @@ const About = () => {
                     duration: 20,
                     repeat: Infinity,
                     ease: "linear",
+                  }}
+                  style={{
+                    willChange: "transform",
+                    transform: "translateZ(0)",
                   }}
                 >
                   💼
@@ -301,6 +307,10 @@ const About = () => {
                     duration: 20,
                     repeat: Infinity,
                     ease: "linear",
+                  }}
+                  style={{
+                    willChange: "transform",
+                    transform: "translateZ(0)",
                   }}
                 >
                   🎓
