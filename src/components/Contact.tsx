@@ -12,6 +12,7 @@ import { motion } from "framer-motion";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import EmailIcon from "@mui/icons-material/Email";
+import WhatsAppIcon from "@mui/icons-material/WhatsApp";
 import { useState } from "react";
 
 const Contact = () => {
@@ -71,6 +72,13 @@ const Contact = () => {
       url: "mailto:marwan.dev2@gmail.com",
       color: "#D44638",
       description: "Get in touch for professional inquiries",
+    },
+    {
+      icon: <WhatsAppIcon />,
+      label: "WhatsApp",
+      url: "https://wa.me/972505519999",
+      color: "#25D366",
+      description: "Message me directly on WhatsApp",
     },
   ];
 
