@@ -5,13 +5,50 @@ import {
   Paper,
   TextField,
   Button,
+  Snackbar,
+  Alert,
 } from "@mui/material";
 import { motion } from "framer-motion";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import GitHubIcon from "@mui/icons-material/GitHub";
 import EmailIcon from "@mui/icons-material/Email";
+import { useState } from "react";
 
 const Contact = () => {
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: "",
+  });
+  const [showMessage, setShowMessage] = useState(false);
+  const [messageType, setMessageType] = useState<"success" | "error">(
+    "success"
+  );
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    // Here you would typically send the form data to your backend
+    // For now, we'll just show a success message
+    if (formData.name && formData.email && formData.message) {
+      setMessageType("success");
+      setShowMessage(true);
+      setFormData({ name: "", email: "", message: "" });
+    } else {
+      setMessageType("error");
+      setShowMessage(true);
+    }
+  };
+
   const socialLinks = [
     {
       icon: <LinkedInIcon />,
@@ -107,56 +144,104 @@ const Contact = () => {
                 </Typography>
                 <Box
                   component="form"
+                  onSubmit={handleSubmit}
                   sx={{ display: "flex", flexDirection: "column", gap: 3 }}
                 >
                   <TextField
+                    name="name"
                     label="Name"
                     variant="outlined"
                     fullWidth
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
                     sx={{
                       "& .MuiOutlinedInput-root": {
                         "&:hover fieldset": {
                           borderColor: "#2196F3",
                         },
+                        "& input": {
+                          color: "#000000",
+                        },
+                      },
+                      "& .MuiInputLabel-root": {
+                        color: "#1976D2",
+                        fontWeight: "bold",
+                        fontSize: "1.1rem",
+                        "&.Mui-focused": {
+                          color: "#1976D2",
+                        },
                       },
                     }}
                   />
                   <TextField
+                    name="email"
                     label="Email"
                     variant="outlined"
                     fullWidth
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    type="email"
                     sx={{
                       "& .MuiOutlinedInput-root": {
                         "&:hover fieldset": {
                           borderColor: "#2196F3",
                         },
+                        "& input": {
+                          color: "#000000",
+                        },
+                      },
+                      "& .MuiInputLabel-root": {
+                        color: "#1976D2",
+                        fontWeight: "bold",
+                        fontSize: "1.1rem",
+                        "&.Mui-focused": {
+                          color: "#1976D2",
+                        },
                       },
                     }}
                   />
                   <TextField
+                    name="message"
                     label="Message"
                     variant="outlined"
                     fullWidth
                     multiline
                     rows={4}
+                    value={formData.message}
+                    onChange={handleChange}
+                    required
                     sx={{
                       "& .MuiOutlinedInput-root": {
                         "&:hover fieldset": {
                           borderColor: "#2196F3",
                         },
+                        "& textarea": {
+                          color: "#000000",
+                        },
+                      },
+                      "& .MuiInputLabel-root": {
+                        color: "#1976D2",
+                        fontWeight: "bold",
+                        fontSize: "1.1rem",
+                        "&.Mui-focused": {
+                          color: "#1976D2",
+                        },
                       },
                     }}
                   />
                   <Button
+                    type="submit"
                     variant="contained"
                     size="large"
                     sx={{
-                      background: "linear-gradient(45deg, #2196F3, #1976D2)",
-                      color: "white",
+                      background: "#1a237e",
+                      color: "#ffffff",
                       fontWeight: "bold",
                       py: 1.5,
                       "&:hover": {
-                        background: "linear-gradient(45deg, #1976D2, #1565C0)",
+                        background: "#000051",
                         transform: "translateY(-2px)",
                         boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
                       },
@@ -241,6 +326,24 @@ const Contact = () => {
           </Box>
         </motion.div>
       </Container>
+
+      {/* Message Display */}
+      <Snackbar
+        open={showMessage}
+        autoHideDuration={6000}
+        onClose={() => setShowMessage(false)}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert
+          onClose={() => setShowMessage(false)}
+          severity={messageType}
+          sx={{ width: "100%" }}
+        >
+          {messageType === "success"
+            ? "Message sent successfully! I'll get back to you soon."
+            : "Please fill in all fields before submitting."}
+        </Alert>
+      </Snackbar>
     </Box>
   );
 };
