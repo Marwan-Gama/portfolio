@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Background Elements -->
+    <defs>
+        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#2196F3" stop-opacity="0.1"/>
+            <stop offset="100%" stop-color="#1976D2" stop-opacity="0.1"/>
+        </linearGradient>
+        <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+            <feDropShadow dx="0" dy="0" stdDeviation="10" flood-color="#2196F3" flood-opacity="0.2"/>
+        </filter>
+    </defs>
+
+    <!-- Background -->
+    <rect x="56" y="56" width="400" height="400" rx="40" fill="url(#gradient)" filter="url(#shadow)"/>
+    
+    <!-- Main Logo -->
+    <g transform="translate(106, 106)">
+        <!-- Modern M Design -->
+        <path d="M0 0 L0 300 L150 150 L300 300 L300 0" 
+              stroke="#2196F3" 
+              stroke-width="30" 
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              fill="none"/>
+        
+        <!-- Decorative Elements -->
+        <g transform="translate(320, 100)">
+            <!-- Code Brackets -->
+            <path d="M0 0 L0 100 L20 100 L20 20 L40 20 L40 0 Z" 
+                  fill="#1976D2"/>
+            <path d="M60 0 L60 20 L80 20 L80 100 L100 100 L100 0 Z" 
+                  fill="#1976D2"/>
+            
+            <!-- Connecting Line -->
+            <line x1="40" y1="10" x2="60" y2="10" 
+                  stroke="#2196F3" 
+                  stroke-width="4" 
+                  stroke-linecap="round"/>
+        </g>
+    </g>
+
+    <!-- Decorative Elements -->
+    <circle cx="256" cy="256" r="200" stroke="#2196F3" stroke-width="2" stroke-dasharray="5 5" opacity="0.3"/>
+    <circle cx="256" cy="256" r="160" stroke="#1976D2" stroke-width="2" stroke-dasharray="5 5" opacity="0.3"/>
+    
+    <!-- Accent Elements -->
+    <circle cx="156" cy="156" r="8" fill="#2196F3"/>
+    <circle cx="356" cy="156" r="8" fill="#2196F3"/>
+    <circle cx="256" cy="256" r="8" fill="#1976D2"/>
+</svg> 
