@@ -1,25 +1,13 @@
-import { Box, Typography, Button, Container, Paper, Chip } from "@mui/material";
+import { Box, Typography, Button, Container, Avatar } from "@mui/material";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const navigate = useNavigate();
-  const skills = [
-    { name: "Python", icon: "🐍" },
-    { name: "Java", icon: "☕" },
-    { name: "C++", icon: "⚡" },
-    { name: "JavaScript", icon: "📜" },
-    { name: "HTML5", icon: "🌐" },
-    { name: "CSS3", icon: "🎨" },
-    { name: "Git", icon: "📦" },
-    { name: "MongoDB", icon: "🗄️" },
-    { name: "NodeJS", icon: "🟢" },
-    { name: "React", icon: "⚛️" },
-    { name: "Angular", icon: "🅰️" },
-    { name: ".NET Core", icon: "🔵" },
-    { name: "MySQL", icon: "🐬" },
-    { name: "AWS", icon: "☁️" },
-  ];
+
+  const handleAbout = () => {
+    navigate("/about");
+  };
 
   const handleViewWork = () => {
     navigate("/projects");
@@ -51,149 +39,214 @@ const Home = () => {
         },
       }}
     >
+      {/* Floating particles background */}
+      {[...Array(20)].map((_, i) => (
+        <motion.div
+          key={i}
+          style={{
+            position: "absolute",
+            width: "10px",
+            height: "10px",
+            background: "rgba(33, 150, 243, 0.2)",
+            borderRadius: "50%",
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`,
+          }}
+          animate={{
+            y: [0, -100, 0],
+            opacity: [0.2, 0.8, 0.2],
+          }}
+          transition={{
+            duration: Math.random() * 3 + 2,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      ))}
+
       <Container>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
         >
-          <Typography
-            variant="h1"
-            component="h1"
-            align="center"
+          <Box
             sx={{
-              fontWeight: "bold",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
               mb: 4,
-              background: "linear-gradient(45deg, #2196F3, #1976D2)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              fontSize: { xs: "2.5rem", sm: "3.5rem", md: "4.5rem" },
-              textShadow: "2px 2px 4px rgba(0,0,0,0.1)",
             }}
           >
-            Hi there 👋, I'm Marwan Abu Gama
-          </Typography>
+            <motion.div
+              whileHover={{ scale: 1.05, rotate: 5 }}
+              whileTap={{ scale: 0.95 }}
+              style={{ marginBottom: "2rem" }}
+            >
+              <Avatar
+                src="/images/profile.jpg"
+                alt="Marwan Abu Gama"
+                sx={{
+                  width: { xs: 150, sm: 180, md: 200 },
+                  height: { xs: 150, sm: 180, md: 200 },
+                  border: "4px solid #2196F3",
+                  boxShadow: "0 4px 20px rgba(33, 150, 243, 0.3)",
+                  position: "relative",
+                  "&::after": {
+                    content: '""',
+                    position: "absolute",
+                    top: -4,
+                    left: -4,
+                    right: -4,
+                    bottom: -4,
+                    border: "2px solid rgba(33, 150, 243, 0.3)",
+                    borderRadius: "50%",
+                    animation: "pulse 2s infinite",
+                  },
+                }}
+              />
+            </motion.div>
 
-          <Paper
-            elevation={3}
-            sx={{
-              p: 4,
-              mb: 4,
-              background: "rgba(255, 255, 255, 0.95)",
-              backdropFilter: "blur(10px)",
-              borderRadius: 3,
-              boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
-            }}
-          >
-            <Typography
-              variant="h4"
-              component="h2"
-              sx={{
-                mb: 3,
-                color: "#1976D2",
-                fontWeight: "bold",
-                display: "flex",
-                alignItems: "center",
-                gap: 1,
-              }}
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
             >
-              <span>🌟</span> About Me
-            </Typography>
-            <Typography
-              variant="body1"
-              sx={{
-                mb: 4,
-                color: "#2c3e50",
-                fontSize: "1.1rem",
-                lineHeight: 1.8,
-                textAlign: "justify",
-              }}
-            >
-              🎓 <strong>Software Engineering Graduate</strong> from{" "}
-              <strong>Sami Shamoon College of Engineering</strong> with a
-              passion for solving complex problems and building innovative
-              solutions. I have hands-on experience in{" "}
-              <strong>web and software development</strong>, and I am constantly
-              improving my technical skills to make meaningful contributions to
-              the tech community.
-            </Typography>
+              <Typography
+                variant="h1"
+                component="h1"
+                align="center"
+                sx={{
+                  fontWeight: "bold",
+                  mb: 2,
+                  background: "linear-gradient(45deg, #2196F3, #1976D2)",
+                  WebkitBackgroundClip: "text",
+                  WebkitTextFillColor: "transparent",
+                  fontSize: { xs: "2rem", sm: "2.8rem", md: "3.5rem" },
+                  textShadow: "2px 2px 4px rgba(0,0,0,0.1)",
+                  position: "relative",
+                  "&::after": {
+                    content: '""',
+                    position: "absolute",
+                    bottom: -10,
+                    left: "50%",
+                    transform: "translateX(-50%)",
+                    width: "50%",
+                    height: "3px",
+                    background:
+                      "linear-gradient(90deg, transparent, #2196F3, transparent)",
+                  },
+                }}
+              >
+                Hi there 👋, I'm Marwan Abu Gama
+              </Typography>
+            </motion.div>
 
-            <Typography
-              variant="h4"
-              component="h2"
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4 }}
+            >
+              <Typography
+                variant="h5"
+                component="h2"
+                align="center"
+                sx={{
+                  color: "#1976D2",
+                  fontWeight: "medium",
+                  mb: 4,
+                  fontSize: { xs: "1.2rem", sm: "1.5rem", md: "1.8rem" },
+                  textShadow: "1px 1px 2px rgba(0,0,0,0.1)",
+                }}
+              >
+                Software Engineer | Full Stack Developer
+              </Typography>
+            </motion.div>
+
+            <Box
               sx={{
-                mb: 3,
-                color: "#1976D2",
-                fontWeight: "bold",
                 display: "flex",
-                alignItems: "center",
-                gap: 1,
+                gap: 2,
+                justifyContent: "center",
+                flexWrap: "wrap",
               }}
             >
-              <span>💻</span> Technical Expertise
-            </Typography>
-            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1.5, mb: 4 }}>
-              {skills.map((skill) => (
-                <Chip
-                  key={skill.name}
-                  label={`${skill.icon} ${skill.name}`}
+              <motion.div
+                whileHover={{ scale: 1.05, rotate: 5 }}
+                whileTap={{ scale: 0.95 }}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.6 }}
+              >
+                <Button
+                  variant="contained"
+                  size="large"
+                  onClick={handleAbout}
                   sx={{
                     background: "linear-gradient(45deg, #2196F3, #1976D2)",
                     color: "white",
                     fontWeight: "bold",
-                    "&:hover": {
-                      transform: "translateY(-2px)",
-                      boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-                    },
+                    px: 4,
+                    py: 1.5,
+                    borderRadius: 2,
+                    minWidth: "200px",
                   }}
-                />
-              ))}
-            </Box>
+                >
+                  About Me
+                </Button>
+              </motion.div>
 
-            <Box sx={{ display: "flex", gap: 2, justifyContent: "center" }}>
-              <Button
-                variant="contained"
-                size="large"
-                onClick={handleViewWork}
-                sx={{
-                  background: "linear-gradient(45deg, #2196F3, #1976D2)",
-                  color: "white",
-                  fontWeight: "bold",
-                  px: 4,
-                  py: 1.5,
-                  borderRadius: 2,
-                  "&:hover": {
-                    background: "linear-gradient(45deg, #1976D2, #1565C0)",
-                    transform: "translateY(-2px)",
-                    boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
-                  },
-                }}
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.7 }}
               >
-                View My Work
-              </Button>
-              <Button
-                variant="outlined"
-                size="large"
-                onClick={handleContact}
-                sx={{
-                  borderColor: "#2196F3",
-                  color: "#2196F3",
-                  fontWeight: "bold",
-                  px: 4,
-                  py: 1.5,
-                  borderRadius: 2,
-                  "&:hover": {
-                    borderColor: "#1976D2",
-                    color: "#1976D2",
-                    transform: "translateY(-2px)",
-                    boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-                  },
-                }}
+                <Button
+                  variant="contained"
+                  size="large"
+                  onClick={handleViewWork}
+                  sx={{
+                    background: "linear-gradient(45deg, #2196F3, #1976D2)",
+                    color: "white",
+                    fontWeight: "bold",
+                    px: 4,
+                    py: 1.5,
+                    borderRadius: 2,
+                    minWidth: "200px",
+                  }}
+                >
+                  View My Work
+                </Button>
+              </motion.div>
+
+              <motion.div
+                whileHover={{ scale: 1.05, rotate: -5 }}
+                whileTap={{ scale: 0.95 }}
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: 0.8 }}
               >
-                Contact Me
-              </Button>
+                <Button
+                  variant="outlined"
+                  size="large"
+                  onClick={handleContact}
+                  sx={{
+                    borderColor: "#2196F3",
+                    color: "#2196F3",
+                    fontWeight: "bold",
+                    px: 4,
+                    py: 1.5,
+                    borderRadius: 2,
+                    minWidth: "200px",
+                  }}
+                >
+                  Contact Me
+                </Button>
+              </motion.div>
             </Box>
-          </Paper>
+          </Box>
         </motion.div>
       </Container>
     </Box>
