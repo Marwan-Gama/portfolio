@@ -1,15 +1,9 @@
-import {
-  Box,
-  Typography,
-  Button,
-  Container,
-  Grid,
-  Paper,
-  Chip,
-} from "@mui/material";
+import { Box, Typography, Button, Container, Paper, Chip } from "@mui/material";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate();
   const skills = [
     { name: "Python", icon: "🐍" },
     { name: "Java", icon: "☕" },
@@ -26,6 +20,14 @@ const Home = () => {
     { name: "MySQL", icon: "🐬" },
     { name: "AWS", icon: "☁️" },
   ];
+
+  const handleViewWork = () => {
+    navigate("/projects");
+  };
+
+  const handleContact = () => {
+    navigate("/contact");
+  };
 
   return (
     <Box
@@ -152,6 +154,7 @@ const Home = () => {
               <Button
                 variant="contained"
                 size="large"
+                onClick={handleViewWork}
                 sx={{
                   background: "linear-gradient(45deg, #2196F3, #1976D2)",
                   color: "white",
@@ -171,6 +174,7 @@ const Home = () => {
               <Button
                 variant="outlined"
                 size="large"
+                onClick={handleContact}
                 sx={{
                   borderColor: "#2196F3",
                   color: "#2196F3",
