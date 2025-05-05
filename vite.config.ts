@@ -8,9 +8,10 @@ export default defineConfig({
     outDir: "dist",
     sourcemap: true,
     rollupOptions: {
+      external: ["@mui/icons-material"],
       output: {
-        manualChunks: {
-          "mui-icons": ["@mui/icons-material"],
+        globals: {
+          "@mui/icons-material": "MuiIcons",
         },
       },
     },
@@ -20,6 +21,10 @@ export default defineConfig({
   },
   optimizeDeps: {
     include: ["@mui/icons-material"],
-    exclude: ["@mui/icons-material/LinkedIn"],
+    esbuildOptions: {
+      define: {
+        global: "globalThis",
+      },
+    },
   },
 });
