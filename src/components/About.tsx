@@ -1,8 +1,11 @@
 import { Box, Typography, Container, Paper, Chip } from "@mui/material";
 import { motion } from "framer-motion";
-import KeyboardDoubleArrowDownIcon from "@mui/icons-material/KeyboardDoubleArrowDown";
+import { useRef } from "react";
 
 const About = () => {
+  const experienceRef = useRef<HTMLDivElement>(null);
+  const educationRef = useRef<HTMLDivElement>(null);
+
   const skills = [
     { name: "Python", icon: "🐍" },
     { name: "Java", icon: "☕" },
@@ -77,6 +80,7 @@ const About = () => {
         >
           {/* About Me Section */}
           <Paper
+            id="about"
             elevation={3}
             sx={{
               p: 4,
@@ -125,7 +129,21 @@ const About = () => {
               improving my technical skills to make meaningful contributions to
               the tech community.
             </Typography>
+          </Paper>
 
+          {/* Technical Expertise Section */}
+          <Paper
+            id="skills"
+            elevation={3}
+            sx={{
+              p: 4,
+              mb: 4,
+              background: "rgba(255, 255, 255, 0.95)",
+              backdropFilter: "blur(10px)",
+              borderRadius: 3,
+              boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
+            }}
+          >
             <Typography
               variant="h4"
               component="h2"
@@ -174,209 +192,175 @@ const About = () => {
             </Box>
           </Paper>
 
-          {/* Scroll Indicator */}
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              mb: 4,
-            }}
-          >
-            <motion.div
-              animate={{
-                y: [0, 10, 0],
-                opacity: [0.5, 1, 0.5],
+          {/* Work Experience Section */}
+          <div ref={experienceRef} id="experience">
+            <Paper
+              elevation={3}
+              sx={{
+                p: 4,
+                mb: 4,
+                background: "rgba(255, 255, 255, 0.95)",
+                backdropFilter: "blur(10px)",
+                borderRadius: 3,
+                boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
               }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-            >
-              <KeyboardDoubleArrowDownIcon
-                sx={{
-                  fontSize: 40,
-                  color: "#1976D2",
-                  cursor: "pointer",
-                }}
-              />
-            </motion.div>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 1 }}
             >
               <Typography
-                variant="subtitle1"
+                variant="h4"
+                component="h2"
                 sx={{
+                  mb: 3,
                   color: "#1976D2",
-                  mt: 1,
-                  fontWeight: "medium",
+                  fontWeight: "bold",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
                 }}
               >
-                Scroll to see more
-              </Typography>
-            </motion.div>
-          </Box>
-
-          {/* Education Section */}
-          <Paper
-            elevation={3}
-            sx={{
-              p: 4,
-              mb: 4,
-              background: "rgba(255, 255, 255, 0.95)",
-              backdropFilter: "blur(10px)",
-              borderRadius: 3,
-              boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
-            }}
-          >
-            <Typography
-              variant="h4"
-              component="h2"
-              sx={{
-                mb: 3,
-                color: "#1976D2",
-                fontWeight: "bold",
-                display: "flex",
-                alignItems: "center",
-                gap: 1,
-              }}
-            >
-              <motion.span
-                animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-              >
-                🎓
-              </motion.span>{" "}
-              Education
-            </Typography>
-            <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
-              {education.map((item, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: -20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.2 }}
+                <motion.span
+                  animate={{ rotate: 360 }}
+                  transition={{
+                    duration: 20,
+                    repeat: Infinity,
+                    ease: "linear",
+                  }}
                 >
-                  <Paper
-                    sx={{
-                      p: 3,
-                      background: "rgba(255, 255, 255, 0.8)",
-                      borderRadius: 2,
-                      boxShadow: "0 4px 12px rgba(0, 0, 0, 0.05)",
-                      "&:hover": {
-                        transform: "translateY(-5px)",
-                        transition: "transform 0.3s ease",
-                      },
-                    }}
+                  💼
+                </motion.span>{" "}
+                Work Experience
+              </Typography>
+              <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
+                {experience.map((item, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.2 }}
                   >
-                    <Typography
-                      variant="h6"
-                      sx={{ color: "#1976D2", fontWeight: "bold" }}
+                    <Paper
+                      sx={{
+                        p: 3,
+                        background: "rgba(255, 255, 255, 0.8)",
+                        borderRadius: 2,
+                        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.05)",
+                        "&:hover": {
+                          transform: "translateY(-5px)",
+                          transition: "transform 0.3s ease",
+                        },
+                      }}
                     >
-                      {item.title}
-                    </Typography>
-                    {item.period && (
+                      <Typography
+                        variant="h6"
+                        sx={{ color: "#1976D2", fontWeight: "bold" }}
+                      >
+                        {item.title}
+                      </Typography>
                       <Typography
                         variant="subtitle2"
                         sx={{ color: "#666", mb: 1 }}
                       >
                         {item.period}
                       </Typography>
-                    )}
-                    {item.institution && (
-                      <Typography
-                        variant="body1"
-                        sx={{ color: "#2c3e50", mb: 1 }}
-                      >
-                        {item.institution}
-                        {item.location && `, ${item.location}`}
-                      </Typography>
-                    )}
-                    {item.description && (
                       <Typography variant="body1" sx={{ color: "#2c3e50" }}>
                         {item.description}
                       </Typography>
-                    )}
-                  </Paper>
-                </motion.div>
-              ))}
-            </Box>
-          </Paper>
+                    </Paper>
+                  </motion.div>
+                ))}
+              </Box>
+            </Paper>
+          </div>
 
-          {/* Experience Section */}
-          <Paper
-            elevation={3}
-            sx={{
-              p: 4,
-              background: "rgba(255, 255, 255, 0.95)",
-              backdropFilter: "blur(10px)",
-              borderRadius: 3,
-              boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
-            }}
-          >
-            <Typography
-              variant="h4"
-              component="h2"
+          {/* Education Section */}
+          <div ref={educationRef} id="education">
+            <Paper
+              elevation={3}
               sx={{
-                mb: 3,
-                color: "#1976D2",
-                fontWeight: "bold",
-                display: "flex",
-                alignItems: "center",
-                gap: 1,
+                p: 4,
+                background: "rgba(255, 255, 255, 0.95)",
+                backdropFilter: "blur(10px)",
+                borderRadius: 3,
+                boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
               }}
             >
-              <motion.span
-                animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+              <Typography
+                variant="h4"
+                component="h2"
+                sx={{
+                  mb: 3,
+                  color: "#1976D2",
+                  fontWeight: "bold",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                }}
               >
-                💼
-              </motion.span>{" "}
-              Work Experience
-            </Typography>
-            <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
-              {experience.map((item, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: index * 0.2 }}
+                <motion.span
+                  animate={{ rotate: 360 }}
+                  transition={{
+                    duration: 20,
+                    repeat: Infinity,
+                    ease: "linear",
+                  }}
                 >
-                  <Paper
-                    sx={{
-                      p: 3,
-                      background: "rgba(255, 255, 255, 0.8)",
-                      borderRadius: 2,
-                      boxShadow: "0 4px 12px rgba(0, 0, 0, 0.05)",
-                      "&:hover": {
-                        transform: "translateY(-5px)",
-                        transition: "transform 0.3s ease",
-                      },
-                    }}
+                  🎓
+                </motion.span>{" "}
+                Education
+              </Typography>
+              <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
+                {education.map((item, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.2 }}
                   >
-                    <Typography
-                      variant="h6"
-                      sx={{ color: "#1976D2", fontWeight: "bold" }}
+                    <Paper
+                      sx={{
+                        p: 3,
+                        background: "rgba(255, 255, 255, 0.8)",
+                        borderRadius: 2,
+                        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.05)",
+                        "&:hover": {
+                          transform: "translateY(-5px)",
+                          transition: "transform 0.3s ease",
+                        },
+                      }}
                     >
-                      {item.title}
-                    </Typography>
-                    <Typography
-                      variant="subtitle2"
-                      sx={{ color: "#666", mb: 1 }}
-                    >
-                      {item.period}
-                    </Typography>
-                    <Typography variant="body1" sx={{ color: "#2c3e50" }}>
-                      {item.description}
-                    </Typography>
-                  </Paper>
-                </motion.div>
-              ))}
-            </Box>
-          </Paper>
+                      <Typography
+                        variant="h6"
+                        sx={{ color: "#1976D2", fontWeight: "bold" }}
+                      >
+                        {item.title}
+                      </Typography>
+                      {item.period && (
+                        <Typography
+                          variant="subtitle2"
+                          sx={{ color: "#666", mb: 1 }}
+                        >
+                          {item.period}
+                        </Typography>
+                      )}
+                      {item.institution && (
+                        <Typography
+                          variant="body1"
+                          sx={{ color: "#2c3e50", mb: 1 }}
+                        >
+                          {item.institution}
+                          {item.location && `, ${item.location}`}
+                        </Typography>
+                      )}
+                      {item.description && (
+                        <Typography variant="body1" sx={{ color: "#2c3e50" }}>
+                          {item.description}
+                        </Typography>
+                      )}
+                    </Paper>
+                  </motion.div>
+                ))}
+              </Box>
+            </Paper>
+          </div>
         </motion.div>
       </Container>
     </Box>

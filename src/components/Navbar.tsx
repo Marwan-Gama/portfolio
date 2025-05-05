@@ -5,11 +5,18 @@ import { motion } from "framer-motion";
 const Navbar = () => {
   const location = useLocation();
 
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
   const navItems = [
     { path: "/", label: "Home" },
-    { path: "/about", label: "About" },
-    { path: "/projects", label: "Projects" },
-    { path: "/contact", label: "Contact" },
+    { path: "/about", label: "About", section: "about" },
+    { path: "/projects", label: "Projects", section: "projects" },
+    { path: "/contact", label: "Contact", section: "contact" },
   ];
 
   return (
@@ -40,20 +47,16 @@ const Navbar = () => {
         >
           Marwan Abu Gama
         </Typography>
-        <Box
-          sx={{
-            display: "flex",
-            gap: 2,
-            alignItems: "center",
-          }}
-        >
+
+        <Box sx={{ display: "flex", gap: 2 }}>
           {navItems.map((item) => (
             <Button
               key={item.path}
               component={RouterLink}
               to={item.path}
+              onClick={() => item.section && scrollToSection(item.section)}
               sx={{
-                color: location.pathname === item.path ? "#1976D2" : "#2c3e50",
+                color: location.pathname === item.path ? "#1976D2" : "#666",
                 fontWeight: location.pathname === item.path ? "bold" : "normal",
                 position: "relative",
                 "&::after": {
@@ -66,11 +69,8 @@ const Navbar = () => {
                   background: "linear-gradient(45deg, #2196F3, #1976D2)",
                   transition: "width 0.3s ease",
                 },
-                "&:hover": {
-                  color: "#1976D2",
-                  "&::after": {
-                    width: "100%",
-                  },
+                "&:hover::after": {
+                  width: "100%",
                 },
               }}
             >
