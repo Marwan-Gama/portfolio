@@ -1,15 +1,20 @@
 import { AppBar, Toolbar, Typography, Button, Box } from "@mui/material";
-import { Link as RouterLink, useLocation } from "react-router-dom";
+import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
 const Navbar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
     }
+  };
+
+  const handleNameClick = () => {
+    navigate("/");
   };
 
   const navItems = [
@@ -30,26 +35,30 @@ const Navbar = () => {
       }}
     >
       <Toolbar>
-        <Typography
-          variant="h6"
-          component={motion.div}
+        <motion.div
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5 }}
-          sx={{
-            flexGrow: 1,
-            fontWeight: 700,
-            background: "linear-gradient(45deg, #2196F3, #1976D2)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            fontSize: { xs: "1.2rem", sm: "1.5rem" },
-            willChange: "transform, opacity",
-            transform: "translateZ(0)",
-          }}
         >
-          Marwan Abu Gama
-        </Typography>
-
+          <Typography
+            variant="h6"
+            component="div"
+            sx={{
+              cursor: "pointer",
+              background: "linear-gradient(45deg, #2196F3, #1976D2)",
+              WebkitBackgroundClip: "text",
+              WebkitTextFillColor: "transparent",
+              fontWeight: "bold",
+              "&:hover": {
+                opacity: 0.8,
+              },
+            }}
+            onClick={handleNameClick}
+          >
+            Marwan Abu Gama
+          </Typography>
+        </motion.div>
+        <Box sx={{ flexGrow: 1 }} />
         <Box sx={{ display: "flex", gap: 2 }}>
           {navItems.map((item) => (
             <Button
