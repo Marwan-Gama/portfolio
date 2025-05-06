@@ -11,6 +11,7 @@ const About = () => {
     { name: "Java", icon: "☕" },
     { name: "C++", icon: "⚡" },
     { name: "JavaScript", icon: "📜" },
+    { name: "TypeScript", icon: "📘" },
     { name: "HTML5", icon: "🌐" },
     { name: "CSS3", icon: "🎨" },
     { name: "Git", icon: "📦" },
@@ -21,6 +22,8 @@ const About = () => {
     { name: ".NET Core", icon: "🔵" },
     { name: "MySQL", icon: "🐬" },
     { name: "AWS", icon: "☁️" },
+    { name: "Problem Solving", icon: "🧩" },
+    { name: "Algorithms", icon: "🔢" },
   ];
 
   const education = [
