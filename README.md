@@ -7,7 +7,6 @@ A modern, responsive portfolio website built with React, TypeScript, and Materia
 - Responsive design that works on all devices
 - Modern UI with smooth animations using Framer Motion
 - Material-UI components for a polished look
-- TypeScript for type safety
 - Contact form with social media links
 - Project showcase section
 - About section with skills and experience
