@@ -54,6 +54,10 @@ const Contact = () => {
 
       setIsSubmitting(true);
 
+      // Debug logging
+      console.log("🌐 API URL being used:", API_URL);
+      console.log("📤 Sending data:", formData);
+
       try {
         const response = await fetch(API_URL, {
           method: "POST",
@@ -67,7 +71,11 @@ const Contact = () => {
           }),
         });
 
+        console.log("📥 Response status:", response.status);
+        console.log("📥 Response headers:", response.headers);
+
         const data = await response.json();
+        console.log("📥 Response data:", data);
 
         if (response.ok && data.success) {
           setMessageType("success");
@@ -83,7 +91,7 @@ const Contact = () => {
           );
         }
       } catch (error) {
-        console.error("Contact form error:", error);
+        console.error("❌ Contact form error:", error);
         setMessageType("error");
         setMessageText(
           "Network error. Please check your connection and try again."

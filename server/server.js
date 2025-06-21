@@ -23,6 +23,7 @@ app.use(
             "https://portfolio-marwan-gama.vercel.app",
             "https://marwan-gama.github.io",
             "https://portfolio-vercel.vercel.app",
+            "https://*.vercel.app", // Allow any Vercel subdomain
           ]
         : [
             "http://localhost:3000",
