@@ -7,10 +7,12 @@ import {
   Button,
   Snackbar,
   Alert,
+  CircularProgress,
 } from "@mui/material";
 import { motion } from "framer-motion";
 import { LinkedIn, GitHub, Email, WhatsApp } from "@mui/icons-material";
 import { useState, useCallback, useMemo } from "react";
+import API_CONFIG from "../config/api";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -22,6 +24,11 @@ const Contact = () => {
   const [messageType, setMessageType] = useState<"success" | "error">(
     "success"
   );
+  const [messageText, setMessageText] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Get API URL from configuration
+  const API_URL = API_CONFIG.getApiUrl();
 
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -35,18 +42,58 @@ const Contact = () => {
   );
 
   const handleSubmit = useCallback(
-    (e: React.FormEvent) => {
+    async (e: React.FormEvent) => {
       e.preventDefault();
-      if (formData.name && formData.email && formData.message) {
-        setMessageType("success");
-        setShowMessage(true);
-        setFormData({ name: "", email: "", message: "" });
-      } else {
+
+      if (!formData.name || !formData.email || !formData.message) {
         setMessageType("error");
+        setMessageText("Please fill in all fields before submitting.");
+        setShowMessage(true);
+        return;
+      }
+
+      setIsSubmitting(true);
+
+      try {
+        const response = await fetch(API_URL, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            name: formData.name.trim(),
+            email: formData.email.trim(),
+            message: formData.message.trim(),
+          }),
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          setMessageType("success");
+          setMessageText(
+            data.message ||
+              "Message sent successfully! I'll get back to you soon."
+          );
+          setFormData({ name: "", email: "", message: "" });
+        } else {
+          setMessageType("error");
+          setMessageText(
+            data.message || "Failed to send message. Please try again."
+          );
+        }
+      } catch (error) {
+        console.error("Contact form error:", error);
+        setMessageType("error");
+        setMessageText(
+          "Network error. Please check your connection and try again."
+        );
+      } finally {
+        setIsSubmitting(false);
         setShowMessage(true);
       }
     },
-    [formData]
+    [formData, API_URL]
   );
 
   const socialLinks = useMemo(
@@ -256,8 +303,13 @@ const Contact = () => {
                         boxShadow: "0 4px 8px rgba(0,0,0,0.2)",
                       },
                     }}
+                    disabled={isSubmitting}
                   >
-                    Send Message
+                    {isSubmitting ? (
+                      <CircularProgress size={24} />
+                    ) : (
+                      "Send Message"
+                    )}
                   </Button>
                 </Box>
               </Paper>
@@ -348,9 +400,7 @@ const Contact = () => {
           severity={messageType}
           sx={{ width: "100%" }}
         >
-          {messageType === "success"
-            ? "Message sent successfully! I'll get back to you soon."
-            : "Please fill in all fields before submitting."}
+          {messageText}
         </Alert>
       </Snackbar>
     </Box>
