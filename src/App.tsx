@@ -30,14 +30,74 @@ const theme = createTheme({
     h1: {
       fontWeight: 700,
       fontSize: "3.5rem",
+      "@media (max-width:600px)": {
+        fontSize: "2.5rem",
+      },
+      "@media (max-width:900px)": {
+        fontSize: "3rem",
+      },
     },
     h2: {
       fontWeight: 600,
       fontSize: "2.5rem",
+      "@media (max-width:600px)": {
+        fontSize: "2rem",
+      },
+      "@media (max-width:900px)": {
+        fontSize: "2.2rem",
+      },
     },
     h3: {
       fontWeight: 600,
       fontSize: "2rem",
+      "@media (max-width:600px)": {
+        fontSize: "1.5rem",
+      },
+      "@media (max-width:900px)": {
+        fontSize: "1.8rem",
+      },
+    },
+    h4: {
+      fontWeight: 600,
+      fontSize: "1.5rem",
+      "@media (max-width:600px)": {
+        fontSize: "1.25rem",
+      },
+    },
+    h5: {
+      fontWeight: 500,
+      fontSize: "1.25rem",
+      "@media (max-width:600px)": {
+        fontSize: "1.1rem",
+      },
+    },
+    h6: {
+      fontWeight: 500,
+      fontSize: "1rem",
+      "@media (max-width:600px)": {
+        fontSize: "0.9rem",
+      },
+    },
+    body1: {
+      fontSize: "1rem",
+      "@media (max-width:600px)": {
+        fontSize: "0.9rem",
+      },
+    },
+    body2: {
+      fontSize: "0.875rem",
+      "@media (max-width:600px)": {
+        fontSize: "0.8rem",
+      },
+    },
+  },
+  breakpoints: {
+    values: {
+      xs: 0,
+      sm: 600,
+      md: 900,
+      lg: 1200,
+      xl: 1536,
     },
   },
   components: {
@@ -49,6 +109,10 @@ const theme = createTheme({
           fontWeight: 600,
           padding: "8px 24px",
           transition: "all 0.3s ease",
+          "@media (max-width:600px)": {
+            padding: "6px 16px",
+            fontSize: "0.875rem",
+          },
           "&:hover": {
             transform: "translateY(-2px)",
           },
@@ -60,9 +124,22 @@ const theme = createTheme({
         root: {
           borderRadius: "16px",
           transition: "all 0.3s ease",
+          "@media (max-width:600px)": {
+            borderRadius: "12px",
+          },
           "&:hover": {
             transform: "translateY(-4px)",
             boxShadow: "0 12px 24px rgba(0, 0, 0, 0.2)",
+          },
+        },
+      },
+    },
+    MuiContainer: {
+      styleOverrides: {
+        root: {
+          "@media (max-width:600px)": {
+            paddingLeft: "16px",
+            paddingRight: "16px",
           },
         },
       },

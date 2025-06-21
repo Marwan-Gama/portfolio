@@ -168,9 +168,13 @@ const Home = () => {
             <Box
               sx={{
                 display: "flex",
-                gap: 2,
+                gap: { xs: 1, sm: 2 },
                 justifyContent: "center",
-                flexWrap: "wrap",
+                alignItems: "center",
+                flexDirection: { xs: "column", sm: "row" },
+                width: "100%",
+                maxWidth: { xs: "100%", sm: "none" },
+                px: { xs: 2, sm: 0 },
               }}
             >
               <motion.div
@@ -179,6 +183,11 @@ const Home = () => {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.6 }}
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
               >
                 <Button
                   variant="contained"
@@ -188,10 +197,12 @@ const Home = () => {
                     background: "linear-gradient(45deg, #2196F3, #1976D2)",
                     color: "white",
                     fontWeight: "bold",
-                    px: 4,
-                    py: 1.5,
+                    px: { xs: 3, sm: 4 },
+                    py: { xs: 1.2, sm: 1.5 },
                     borderRadius: 2,
-                    minWidth: "200px",
+                    width: { xs: "100%", sm: "auto" },
+                    minWidth: { xs: "auto", sm: "200px" },
+                    fontSize: { xs: "0.9rem", sm: "1rem" },
                   }}
                 >
                   About Me
@@ -204,6 +215,11 @@ const Home = () => {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.7 }}
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
               >
                 <Button
                   variant="contained"
@@ -213,10 +229,12 @@ const Home = () => {
                     background: "linear-gradient(45deg, #2196F3, #1976D2)",
                     color: "white",
                     fontWeight: "bold",
-                    px: 4,
-                    py: 1.5,
+                    px: { xs: 3, sm: 4 },
+                    py: { xs: 1.2, sm: 1.5 },
                     borderRadius: 2,
-                    minWidth: "200px",
+                    width: { xs: "100%", sm: "auto" },
+                    minWidth: { xs: "auto", sm: "200px" },
+                    fontSize: { xs: "0.9rem", sm: "1rem" },
                   }}
                 >
                   View My Work
@@ -229,6 +247,11 @@ const Home = () => {
                 initial={{ opacity: 0, x: 20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.8 }}
+                style={{
+                  width: "100%",
+                  display: "flex",
+                  justifyContent: "center",
+                }}
               >
                 <Button
                   variant="outlined"
@@ -238,10 +261,12 @@ const Home = () => {
                     borderColor: "#2196F3",
                     color: "#2196F3",
                     fontWeight: "bold",
-                    px: 4,
-                    py: 1.5,
+                    px: { xs: 3, sm: 4 },
+                    py: { xs: 1.2, sm: 1.5 },
                     borderRadius: 2,
-                    minWidth: "200px",
+                    width: { xs: "100%", sm: "auto" },
+                    minWidth: { xs: "auto", sm: "200px" },
+                    fontSize: { xs: "0.9rem", sm: "1rem" },
                   }}
                 >
                   Contact Me
