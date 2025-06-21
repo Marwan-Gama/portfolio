@@ -15,15 +15,6 @@ export default defineConfig({
         drop_debugger: true,
       },
     },
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          "react-vendor": ["react", "react-dom", "react-router-dom"],
-          "mui-vendor": ["@mui/material", "@mui/icons-material"],
-          "framer-vendor": ["framer-motion"],
-        },
-      },
-    },
   },
   server: {
     port: 3000,
