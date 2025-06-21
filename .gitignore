@@ -24,3 +24,8 @@ dist-ssr
 *.sw?
 
 .vercel
+
+# Ignore all .env files in any directory
+.env
+**/.env
+*.env
