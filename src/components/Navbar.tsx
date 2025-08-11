@@ -1,188 +1,159 @@
-import {
-  AppBar,
-  Toolbar,
-  Typography,
-  Button,
-  Box,
-  IconButton,
-  Drawer,
-  List,
-  ListItem,
-  ListItemText,
-  useTheme,
-  useMediaQuery,
-} from "@mui/material";
-import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
-import { useState } from "react";
-import MenuIcon from "@mui/icons-material/Menu";
-import CloseIcon from "@mui/icons-material/Close";
+/**
+ * Navigation Bar Component
+ *
+ * A responsive navigation bar that includes:
+ * - Desktop navigation with horizontal menu
+ * - Mobile navigation with hamburger menu and drawer
+ * - Active page highlighting
+ * - Smooth transitions and animations
+ */
 
-const Navbar = () => {
+import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
+
+// Import constants
+import { NAV_ITEMS } from "../constants";
+import "../styles/components/Navbar.css";
+
+/**
+ * Navigation bar component with responsive design
+ * @returns JSX.Element - The rendered navigation bar
+ */
+const Navbar = (): JSX.Element => {
+  // Hooks for navigation and responsive design
   const location = useLocation();
   const navigate = useNavigate();
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  const [mobileOpen, setMobileOpen] = useState(false);
 
-  const handleNameClick = () => {
+  // State for mobile drawer
+  const [mobileOpen, setMobileOpen] = useState<boolean>(false);
+  const [isMobile, setIsMobile] = useState<boolean>(false);
+
+  // Check if mobile on mount and resize
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth <= 768);
+    };
+
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  /**
+   * Handles navigation to home page and closes mobile drawer
+   */
+  const handleNameClick = (): void => {
     navigate("/");
     setMobileOpen(false);
   };
 
-  const handleDrawerToggle = () => {
+  /**
+   * Toggles the mobile drawer open/closed state
+   */
+  const handleDrawerToggle = (): void => {
     setMobileOpen(!mobileOpen);
   };
 
-  const navItems = [
-    { path: "/", label: "Home" },
-    { path: "/about", label: "About" },
-    { path: "/projects", label: "Projects" },
-    { path: "/contact", label: "Contact" },
-  ];
+  /**
+   * Closes the mobile drawer when a navigation item is clicked
+   */
+  const handleNavItemClick = (): void => {
+    setMobileOpen(false);
+  };
 
-  const drawer = (
-    <Box sx={{ width: 250, pt: 2 }}>
-      <Box
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          px: 2,
-          mb: 2,
-        }}
-      >
-        <Typography
-          variant="h6"
-          component="div"
-          sx={{
-            cursor: "pointer",
-            background: "linear-gradient(45deg, #2196F3, #1976D2)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            fontWeight: "bold",
-          }}
-          onClick={handleNameClick}
-        >
+  /**
+   * Renders the mobile navigation drawer
+   * @returns JSX.Element - The mobile drawer content
+   */
+  const renderMobileDrawer = (): JSX.Element => (
+    <div className={`mobile-drawer ${mobileOpen ? "open" : ""}`}>
+      {/* Drawer header with name and close button */}
+      <div className="drawer-header">
+        <div className="brand-name" onClick={handleNameClick}>
           Marwan Abu Gama
-        </Typography>
-        <IconButton onClick={handleDrawerToggle} sx={{ color: "#666" }}>
-          <CloseIcon />
-        </IconButton>
-      </Box>
-      <List>
-        {navItems.map((item) => (
-          <ListItem
-            key={item.path}
-            component={RouterLink}
-            to={item.path}
-            onClick={() => setMobileOpen(false)}
-            sx={{
-              color: location.pathname === item.path ? "#1976D2" : "#666",
-              fontWeight: location.pathname === item.path ? "bold" : "normal",
-              borderBottom: "1px solid rgba(0, 0, 0, 0.1)",
-              "&:hover": {
-                backgroundColor: "rgba(25, 118, 210, 0.08)",
-              },
-            }}
+        </div>
+        <button onClick={handleDrawerToggle} className="drawer-close-button">
+          <svg
+            className="drawer-close-icon"
+            viewBox="0 0 24 24"
+            fill="currentColor"
           >
-            <ListItemText primary={item.label} />
-          </ListItem>
+            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+          </svg>
+        </button>
+      </div>
+
+      {/* Navigation items list */}
+      <ul className="mobile-nav-menu">
+        {NAV_ITEMS.map((item) => (
+          <li key={item.path} className="mobile-nav-item">
+            <RouterLink
+              to={item.path}
+              onClick={handleNavItemClick}
+              className={`mobile-nav-link ${
+                location.pathname === item.path ? "active" : ""
+              }`}
+            >
+              {item.label}
+            </RouterLink>
+          </li>
         ))}
-      </List>
-    </Box>
+      </ul>
+    </div>
   );
 
   return (
-    <AppBar
-      position="sticky"
-      sx={{
-        background: "rgba(255, 255, 255, 0.95)",
-        backdropFilter: "blur(10px)",
-        boxShadow: "0 4px 20px rgba(0, 0, 0, 0.1)",
-        borderBottom: "1px solid rgba(0, 0, 0, 0.1)",
-      }}
-    >
-      <Toolbar sx={{ minHeight: { xs: "56px", sm: "64px" } }}>
-        <Typography
-          variant="h6"
-          component="div"
-          sx={{
-            cursor: "pointer",
-            background: "linear-gradient(45deg, #2196F3, #1976D2)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            fontWeight: "bold",
-            fontSize: { xs: "1rem", sm: "1.25rem" },
-            "&:hover": {
-              opacity: 0.8,
-            },
-          }}
-          onClick={handleNameClick}
-        >
-          Marwan Abu Gama
-        </Typography>
-        <Box sx={{ flexGrow: 1 }} />
+    <>
+      <nav className="navbar">
+        <div className="navbar-container">
+          {/* Brand Name */}
+          <div className="brand-name" onClick={handleNameClick}>
+            Marwan Abu Gama
+          </div>
 
-        {/* Desktop Navigation */}
-        {!isMobile && (
-          <Box sx={{ display: "flex", gap: 2 }}>
-            {navItems.map((item) => (
-              <Button
-                key={item.path}
-                component={RouterLink}
-                to={item.path}
-                sx={{
-                  color: location.pathname === item.path ? "#1976D2" : "#666",
-                  fontWeight:
-                    location.pathname === item.path ? "bold" : "normal",
-                  fontSize: { sm: "0.875rem", md: "1rem" },
-                  "&:hover": {
-                    backgroundColor: "rgba(25, 118, 210, 0.08)",
-                  },
-                }}
-              >
-                {item.label}
-              </Button>
+          {/* Desktop Navigation */}
+          <ul className="nav-menu">
+            {NAV_ITEMS.map((item) => (
+              <li key={item.path} className="nav-item">
+                <RouterLink
+                  to={item.path}
+                  className={`nav-link ${
+                    location.pathname === item.path ? "active" : ""
+                  }`}
+                >
+                  {item.label}
+                </RouterLink>
+              </li>
             ))}
-          </Box>
-        )}
+          </ul>
 
-        {/* Mobile Menu Button */}
-        {isMobile && (
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            edge="end"
-            onClick={handleDrawerToggle}
-            sx={{ color: "#666" }}
-          >
-            <MenuIcon />
-          </IconButton>
-        )}
-      </Toolbar>
+          {/* Mobile Menu Button */}
+          {isMobile && (
+            <button onClick={handleDrawerToggle} className="mobile-menu-button">
+              <svg
+                className="mobile-menu-icon"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+              >
+                <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
+              </svg>
+            </button>
+          )}
+        </div>
+      </nav>
 
       {/* Mobile Drawer */}
-      <Drawer
-        variant="temporary"
-        anchor="right"
-        open={mobileOpen}
-        onClose={handleDrawerToggle}
-        ModalProps={{
-          keepMounted: true,
-        }}
-        sx={{
-          display: { xs: "block", md: "none" },
-          "& .MuiDrawer-paper": {
-            boxSizing: "border-box",
-            width: 250,
-            background: "rgba(255, 255, 255, 0.98)",
-            backdropFilter: "blur(10px)",
-          },
-        }}
-      >
-        {drawer}
-      </Drawer>
-    </AppBar>
+      {isMobile && renderMobileDrawer()}
+
+      {/* Overlay for mobile drawer */}
+      {isMobile && (
+        <div
+          className={`overlay ${mobileOpen ? "open" : ""}`}
+          onClick={handleDrawerToggle}
+        />
+      )}
+    </>
   );
 };
 

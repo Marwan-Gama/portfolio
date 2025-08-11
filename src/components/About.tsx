@@ -1,11 +1,33 @@
-import { Box, Typography, Container, Paper, Chip } from "@mui/material";
+/**
+ * About Page Component
+ *
+ * A comprehensive about page that showcases:
+ * - Personal introduction and background
+ * - Technical skills and expertise
+ * - Work experience timeline
+ * - Educational background
+ * - Animated sections with Framer Motion
+ */
+
 import { motion } from "framer-motion";
 import { useRef } from "react";
 
-const About = () => {
+// Import constants and types
+import { SOCIAL_LINKS } from "../constants";
+import "../styles/components/About.css";
+
+/**
+ * About page component with personal information, skills, and experience
+ * @returns JSX.Element - The rendered about page
+ */
+const About = (): JSX.Element => {
+  // Refs for scroll navigation
   const experienceRef = useRef<HTMLDivElement>(null);
   const educationRef = useRef<HTMLDivElement>(null);
 
+  /**
+   * Technical skills data with icons and names
+   */
   const skills = [
     { name: "Python", icon: "🐍" },
     { name: "Java", icon: "☕" },
@@ -26,6 +48,9 @@ const About = () => {
     { name: "Algorithms", icon: "🔢" },
   ];
 
+  /**
+   * Educational background data
+   */
   const education = [
     {
       title: "B.Sc in Software Engineering",
@@ -46,6 +71,9 @@ const About = () => {
     },
   ];
 
+  /**
+   * Work experience data
+   */
   const experience = [
     {
       title: "Siraj - OJT Program",
@@ -68,44 +96,12 @@ const About = () => {
   ];
 
   return (
-    <Box
-      sx={{
-        minHeight: "100vh",
-        py: 8,
-        background: "linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)",
-      }}
-    >
-      <Container>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          {/* About Me Section */}
-          <Paper
-            id="about"
-            elevation={3}
-            sx={{
-              p: 4,
-              mb: 4,
-              background: "rgba(255, 255, 255, 0.95)",
-              backdropFilter: "blur(10px)",
-              borderRadius: 3,
-              boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
-            }}
-          >
-            <Typography
-              variant="h4"
-              component="h2"
-              sx={{
-                mb: 3,
-                color: "#1976D2",
-                fontWeight: "bold",
-                display: "flex",
-                alignItems: "center",
-                gap: 1,
-              }}
-            >
+    <div className="about-container">
+      <div className="about-content">
+        {/* About Me Section */}
+        <section className="about-section">
+          <div className="about-intro">
+            <h2 className="about-section-title">
               <motion.span
                 animate={{ rotate: 360 }}
                 transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
@@ -114,17 +110,8 @@ const About = () => {
                 🌟
               </motion.span>{" "}
               About Me
-            </Typography>
-            <Typography
-              variant="body1"
-              sx={{
-                mb: 4,
-                color: "#2c3e50",
-                fontSize: "1.1rem",
-                lineHeight: 1.8,
-                textAlign: "justify",
-              }}
-            >
+            </h2>
+            <p className="about-intro-text">
               🎓 <strong>Software Engineering Graduate</strong> from{" "}
               <strong>Sami Shamoon College of Engineering</strong> with a
               passion for solving complex problems and building innovative
@@ -132,251 +119,121 @@ const About = () => {
               <strong>web and software development</strong>, and I am constantly
               improving my technical skills to make meaningful contributions to
               the tech community.
-            </Typography>
-          </Paper>
+            </p>
+            <p className="about-intro-text">
+              🚀 I'm passionate about creating user-friendly applications and
+              solving real-world problems through code. My journey in software
+              development has equipped me with a strong foundation in both
+              frontend and backend technologies, allowing me to build complete
+              solutions from concept to deployment.
+            </p>
+          </div>
+        </section>
 
-          {/* Technical Expertise Section */}
-          <Paper
-            id="skills"
-            elevation={3}
-            sx={{
-              p: 4,
-              mb: 4,
-              background: "rgba(255, 255, 255, 0.95)",
-              backdropFilter: "blur(10px)",
-              borderRadius: 3,
-              boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
-            }}
-          >
-            <Typography
-              variant="h4"
-              component="h2"
-              sx={{
-                mb: 3,
-                color: "#1976D2",
-                fontWeight: "bold",
-                display: "flex",
-                alignItems: "center",
-                gap: 1,
-              }}
-            >
-              <motion.span
-                animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                style={{ willChange: "transform", transform: "translateZ(0)" }}
-              >
-                💻
-              </motion.span>{" "}
-              Technical Expertise
-            </Typography>
-            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1.5, mb: 4 }}>
+        {/* Technical Skills Section */}
+        <section className="about-section">
+          <div className="skills-section">
+            <h2 className="about-section-title">Technical Skills</h2>
+            <div className="skills-grid">
               {skills.map((skill, index) => (
                 <motion.div
                   key={skill.name}
+                  className="skill-chip"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  whileHover={{ scale: 1.1, rotate: 5 }}
-                  whileTap={{ scale: 0.9 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  whileHover={{ scale: 1.05 }}
                 >
-                  <Chip
-                    label={`${skill.icon} ${skill.name}`}
-                    sx={{
-                      background: "linear-gradient(45deg, #2196F3, #1976D2)",
-                      color: "white",
-                      fontWeight: "bold",
-                      cursor: "pointer",
-                      "&:hover": {
-                        transform: "translateY(-2px)",
-                        boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-                      },
-                    }}
-                  />
+                  <span className="skill-icon">{skill.icon}</span>
+                  <span>{skill.name}</span>
                 </motion.div>
               ))}
-            </Box>
-          </Paper>
-
-          {/* Work Experience Section */}
-          <div ref={experienceRef} id="experience">
-            <Paper
-              elevation={3}
-              sx={{
-                p: 4,
-                mb: 4,
-                background: "rgba(255, 255, 255, 0.95)",
-                backdropFilter: "blur(10px)",
-                borderRadius: 3,
-                boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
-              }}
-            >
-              <Typography
-                variant="h4"
-                component="h2"
-                sx={{
-                  mb: 3,
-                  color: "#1976D2",
-                  fontWeight: "bold",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 1,
-                }}
-              >
-                <motion.span
-                  animate={{ rotate: 360 }}
-                  transition={{
-                    duration: 20,
-                    repeat: Infinity,
-                    ease: "linear",
-                  }}
-                  style={{
-                    willChange: "transform",
-                    transform: "translateZ(0)",
-                  }}
-                >
-                  💼
-                </motion.span>{" "}
-                Work Experience
-              </Typography>
-              <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
-                {experience.map((item, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.2 }}
-                  >
-                    <Paper
-                      sx={{
-                        p: 3,
-                        background: "rgba(255, 255, 255, 0.8)",
-                        borderRadius: 2,
-                        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.05)",
-                        "&:hover": {
-                          transform: "translateY(-5px)",
-                          transition: "transform 0.3s ease",
-                        },
-                      }}
-                    >
-                      <Typography
-                        variant="h6"
-                        sx={{ color: "#1976D2", fontWeight: "bold" }}
-                      >
-                        {item.title}
-                      </Typography>
-                      <Typography
-                        variant="subtitle2"
-                        sx={{ color: "#666", mb: 1 }}
-                      >
-                        {item.period}
-                      </Typography>
-                      <Typography variant="body1" sx={{ color: "#2c3e50" }}>
-                        {item.description}
-                      </Typography>
-                    </Paper>
-                  </motion.div>
-                ))}
-              </Box>
-            </Paper>
+            </div>
           </div>
+        </section>
 
-          {/* Education Section */}
-          <div ref={educationRef} id="education">
-            <Paper
-              elevation={3}
-              sx={{
-                p: 4,
-                background: "rgba(255, 255, 255, 0.95)",
-                backdropFilter: "blur(10px)",
-                borderRadius: 3,
-                boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
-              }}
-            >
-              <Typography
-                variant="h4"
-                component="h2"
-                sx={{
-                  mb: 3,
-                  color: "#1976D2",
-                  fontWeight: "bold",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 1,
-                }}
+        {/* Work Experience Section */}
+        <section className="about-section" ref={experienceRef}>
+          <div className="experience-section">
+            <h2 className="about-section-title">Work Experience</h2>
+            {experience.map((exp, index) => (
+              <motion.div
+                key={exp.title}
+                className="experience-item"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
               >
-                <motion.span
-                  animate={{ rotate: 360 }}
-                  transition={{
-                    duration: 20,
-                    repeat: Infinity,
-                    ease: "linear",
-                  }}
-                  style={{
-                    willChange: "transform",
-                    transform: "translateZ(0)",
-                  }}
-                >
-                  🎓
-                </motion.span>{" "}
-                Education
-              </Typography>
-              <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }}>
-                {education.map((item, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.2 }}
-                  >
-                    <Paper
-                      sx={{
-                        p: 3,
-                        background: "rgba(255, 255, 255, 0.8)",
-                        borderRadius: 2,
-                        boxShadow: "0 4px 12px rgba(0, 0, 0, 0.05)",
-                        "&:hover": {
-                          transform: "translateY(-5px)",
-                          transition: "transform 0.3s ease",
-                        },
-                      }}
-                    >
-                      <Typography
-                        variant="h6"
-                        sx={{ color: "#1976D2", fontWeight: "bold" }}
-                      >
-                        {item.title}
-                      </Typography>
-                      {item.period && (
-                        <Typography
-                          variant="subtitle2"
-                          sx={{ color: "#666", mb: 1 }}
-                        >
-                          {item.period}
-                        </Typography>
-                      )}
-                      {item.institution && (
-                        <Typography
-                          variant="body1"
-                          sx={{ color: "#2c3e50", mb: 1 }}
-                        >
-                          {item.institution}
-                          {item.location && `, ${item.location}`}
-                        </Typography>
-                      )}
-                      {item.description && (
-                        <Typography variant="body1" sx={{ color: "#2c3e50" }}>
-                          {item.description}
-                        </Typography>
-                      )}
-                    </Paper>
-                  </motion.div>
-                ))}
-              </Box>
-            </Paper>
+                <h3 className="experience-title">{exp.title}</h3>
+                <p className="experience-period">{exp.period}</p>
+                <p className="experience-description">{exp.description}</p>
+              </motion.div>
+            ))}
           </div>
-        </motion.div>
-      </Container>
-    </Box>
+        </section>
+
+        {/* Education Section */}
+        <section className="about-section" ref={educationRef}>
+          <div className="education-section">
+            <h2 className="about-section-title">Education</h2>
+            {education.map((edu, index) => (
+              <motion.div
+                key={edu.title}
+                className="education-item"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+              >
+                <h3 className="education-title">{edu.title}</h3>
+                {edu.period && <p className="education-period">{edu.period}</p>}
+                {edu.institution && (
+                  <p className="education-institution">{edu.institution}</p>
+                )}
+                {edu.location && (
+                  <p className="education-location">{edu.location}</p>
+                )}
+                {edu.description && (
+                  <p className="education-description">{edu.description}</p>
+                )}
+              </motion.div>
+            ))}
+          </div>
+        </section>
+
+        {/* Social Links Section */}
+        <section className="about-section">
+          <div className="social-links">
+            {Object.entries(SOCIAL_LINKS).map(([key, url], index) => {
+              const icons = {
+                github: "🐙",
+                linkedin: "💼",
+                twitter: "🐦",
+                email: "📧",
+              };
+
+              return (
+                <motion.a
+                  key={key}
+                  href={key === "email" ? `mailto:${url}` : url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="social-link"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  whileHover={{ scale: 1.05 }}
+                >
+                  <span className="social-icon">
+                    {icons[key as keyof typeof icons]}
+                  </span>
+                  <span>{key.charAt(0).toUpperCase() + key.slice(1)}</span>
+                </motion.a>
+              );
+            })}
+          </div>
+        </section>
+      </div>
+    </div>
   );
 };
 

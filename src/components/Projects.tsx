@@ -1,189 +1,162 @@
-import { Box, Typography, Container, Paper, Button, Chip } from "@mui/material";
+/**
+ * Projects Page Component
+ *
+ * A showcase of portfolio projects featuring:
+ * - Project cards with detailed information
+ * - Technology stack display
+ * - GitHub links for each project
+ * - Responsive grid layout
+ * - Smooth animations and hover effects
+ */
+
 import { motion } from "framer-motion";
 
-const Projects = () => {
-  const projects = [
+// Import types and constants
+import { Project } from "../types";
+import "../styles/components/Projects.css";
+
+/**
+ * Projects page component showcasing portfolio work
+ * @returns JSX.Element - The rendered projects page
+ */
+const Projects = (): JSX.Element => {
+  /**
+   * Portfolio projects data with detailed information
+   */
+  const projects: Project[] = [
     {
+      id: "ecommerce-platform",
       title: "E-Commerce Platform",
       description:
         "A full-featured e-commerce platform built with React.js, featuring product listings, shopping cart, user authentication, and payment integration.",
       technologies: ["React", "JavaScript", "HTML5", "CSS3", "Firebase"],
+      image: "/images/ecommerce.jpg",
       githubUrl: "https://github.com/Marwan-Gama/E-Commerce",
-      period: "2024",
+      liveUrl: "https://ecommerce-demo.vercel.app",
+      featured: true,
     },
     {
+      id: "ojt-siraj-project",
       title: "OJT-Siraj Program Project",
       description:
         "Developed a comprehensive web application during the Siraj OJT program, implementing Flask, Python, MySQL, and React. Focused on automation testing with Pytest and network management.",
       technologies: ["Flask", "Python", "MySQL", "React", "AWS S3", "Pytest"],
+      image: "/images/siraj-project.jpg",
       githubUrl: "https://github.com/Marwan-Gama/OJT-Siraj",
-      period: "2023-2024",
+      featured: true,
     },
     {
+      id: "wizard-application",
       title: "Wizard Application",
       description:
         "A wizard application developed during the OJT Program, focusing on user experience and step-by-step guidance.",
       technologies: ["Python", "Flask", "MySQL", "React"],
+      image: "/images/wizard-app.jpg",
       githubUrl: "https://github.com/Marwan-Gama/Wizard",
-      period: "2023",
+      featured: false,
     },
     {
+      id: "react-training",
       title: "React Training Projects",
       description:
         "A collection of React.js training projects showcasing various features and best practices in modern web development.",
       technologies: ["React", "JavaScript", "HTML5", "CSS3"],
+      image: "/images/react-training.jpg",
       githubUrl: "https://github.com/Marwan-Gama/react-training",
-      period: "2023",
+      featured: false,
     },
     {
+      id: "saints-app",
       title: "Saints App",
       description:
         "A Python-based application developed for managing and tracking various aspects of a community or organization.",
       technologies: ["Python", "Flask", "MySQL"],
+      image: "/images/saints-app.jpg",
       githubUrl: "https://github.com/Marwan-Gama/saints-app",
-      period: "2023",
+      featured: false,
     },
   ];
 
-  return (
-    <Box
-      sx={{
-        minHeight: "100vh",
-        py: 8,
-        background: "linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%)",
-      }}
-    >
-      <Container>
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <Typography
-            variant="h1"
-            component="h1"
-            align="center"
-            sx={{
-              mb: 6,
-              background: "linear-gradient(45deg, #2196F3, #1976D2)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              fontSize: { xs: "2.5rem", sm: "3.5rem", md: "4.5rem" },
-              textShadow: "2px 2px 4px rgba(0,0,0,0.1)",
-            }}
-          >
-            My Projects
-          </Typography>
+  /**
+   * Handle project card click to open GitHub repository
+   * @param url - GitHub repository URL
+   */
+  const handleProjectClick = (url: string): void => {
+    window.open(url, "_blank", "noopener,noreferrer");
+  };
 
-          <Box
-            sx={{
-              display: "flex",
-              flexWrap: "wrap",
-              gap: 4,
-              justifyContent: "center",
-            }}
-          >
-            {projects.map((project, index) => (
-              <Box
-                key={index}
-                sx={{
-                  width: { xs: "100%", md: "calc(50% - 16px)" },
-                }}
-              >
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                >
-                  <Paper
-                    elevation={3}
-                    sx={{
-                      height: "100%",
-                      p: 4,
-                      background: "rgba(255, 255, 255, 0.95)",
-                      backdropFilter: "blur(10px)",
-                      borderRadius: 3,
-                      boxShadow: "0 8px 32px rgba(0, 0, 0, 0.1)",
-                      transition: "transform 0.2s ease",
-                      willChange: "transform",
-                      transform: "translateZ(0)",
-                      "&:hover": {
-                        transform: "translateY(-4px)",
-                      },
-                    }}
+  return (
+    <div className="projects-container">
+      <div className="projects-content">
+        {/* Header Section */}
+        <div className="projects-header">
+          <h1 className="projects-title">My Projects</h1>
+          <p className="projects-subtitle">
+            Here are some of the projects I've worked on. Each project
+            represents a unique challenge and learning experience in my journey
+            as a developer.
+          </p>
+        </div>
+
+        {/* Projects Grid */}
+        <div className="projects-grid">
+          {projects.map((project, index) => (
+            <motion.div
+              key={project.id}
+              className={`project-card ${project.featured ? "featured" : ""}`}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6, delay: index * 0.1 }}
+              whileHover={{ y: -8 }}
+            >
+              {project.featured && (
+                <div className="featured-badge">Featured</div>
+              )}
+
+              <img
+                src={project.image}
+                alt={project.title}
+                className="project-image"
+              />
+
+              <div className="project-content">
+                <h3 className="project-title">{project.title}</h3>
+                <p className="project-description">{project.description}</p>
+
+                <div className="project-technologies">
+                  {project.technologies.map((tech) => (
+                    <span key={tech} className="technology-chip">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+
+                <div className="project-actions">
+                  <button
+                    onClick={() =>
+                      project.githubUrl && handleProjectClick(project.githubUrl)
+                    }
+                    className="project-button project-button-primary"
                   >
-                    <Typography
-                      variant="h5"
-                      component="h2"
-                      sx={{
-                        mb: 2,
-                        color: "#1976D2",
-                        fontWeight: "bold",
-                      }}
-                    >
-                      {project.title}
-                    </Typography>
-                    <Typography
-                      variant="subtitle2"
-                      sx={{
-                        mb: 2,
-                        color: "#666",
-                      }}
-                    >
-                      {project.period}
-                    </Typography>
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        mb: 3,
-                        color: "#2c3e50",
-                        lineHeight: 1.6,
-                      }}
-                    >
-                      {project.description}
-                    </Typography>
-                    <Box
-                      sx={{ display: "flex", flexWrap: "wrap", gap: 1, mb: 3 }}
-                    >
-                      {project.technologies.map((tech) => (
-                        <Chip
-                          key={tech}
-                          label={tech}
-                          sx={{
-                            background:
-                              "linear-gradient(45deg, #2196F3, #1976D2)",
-                            color: "white",
-                            fontWeight: "bold",
-                          }}
-                        />
-                      ))}
-                    </Box>
-                    <Button
-                      variant="outlined"
-                      href={project.githubUrl}
+                    View Code
+                  </button>
+                  {project.liveUrl && (
+                    <a
+                      href={project.liveUrl}
                       target="_blank"
-                      sx={{
-                        borderColor: "#2196F3",
-                        color: "#2196F3",
-                        fontWeight: "bold",
-                        "&:hover": {
-                          borderColor: "#1976D2",
-                          color: "#1976D2",
-                          transform: "translateY(-2px)",
-                          boxShadow: "0 4px 8px rgba(0,0,0,0.1)",
-                        },
-                      }}
+                      rel="noopener noreferrer"
+                      className="project-button project-button-secondary"
                     >
-                      View on GitHub
-                    </Button>
-                  </Paper>
-                </motion.div>
-              </Box>
-            ))}
-          </Box>
-        </motion.div>
-      </Container>
-    </Box>
+                      Live Demo
+                    </a>
+                  )}
+                </div>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 };
 
