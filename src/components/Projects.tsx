@@ -6,14 +6,90 @@
  * - Technology stack display
  * - GitHub links for each project
  * - Responsive grid layout
- * - Fast, smooth animations and hover effects
+ * - Simple, fast design without animations
  */
 
-import { motion } from "framer-motion";
+import { useMemo, useCallback } from "react";
 
 // Import types and constants
 import { Project } from "../types";
 import "../styles/components/Projects.css";
+
+/**
+ * Individual Project Card Component
+ */
+const ProjectCard = ({ project }: { project: Project }) => {
+  return (
+    <div className="project-card">
+      <div className="project-image-container">
+        <img
+          src={project.image}
+          alt={project.title}
+          className="project-image"
+          loading="lazy"
+          onError={(e) => {
+            const target = e.target as HTMLImageElement;
+            target.src = "/images/placeholder-project.svg";
+          }}
+        />
+      </div>
+
+      <div className="project-content">
+        <h3 className="project-title">{project.title}</h3>
+        <p className="project-description">{project.description}</p>
+
+        <div className="project-technologies">
+          {project.technologies.slice(0, 4).map((tech) => (
+            <span key={tech} className="technology-chip">
+              {tech}
+            </span>
+          ))}
+          {project.technologies.length > 4 && (
+            <span className="technology-chip more-tech">
+              +{project.technologies.length - 4} more
+            </span>
+          )}
+        </div>
+
+        <div className="project-actions">
+          <button
+            onClick={() =>
+              project.githubUrl &&
+              window.open(project.githubUrl, "_blank", "noopener,noreferrer")
+            }
+            className="project-button project-button-primary"
+            aria-label={`View code for ${project.title}`}
+          >
+            <svg
+              className="button-icon"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+            </svg>
+            View Code
+          </button>
+          <a
+            href={project.liveUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="project-button project-button-secondary"
+            aria-label={`Go live to ${project.title}`}
+          >
+            <svg
+              className="button-icon"
+              viewBox="0 0 24 24"
+              fill="currentColor"
+            >
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+            </svg>
+            Go Live
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 /**
  * Projects page component showcasing portfolio work
@@ -23,206 +99,107 @@ const Projects = (): JSX.Element => {
   /**
    * Portfolio projects data with detailed information
    */
-  const projects: Project[] = [
-    {
-      id: "learn-up",
-      title: "Learn Up - Graduation Project",
-      description:
-        "An educational app that enhances classroom engagement with interactive learning, real-time communication, and progress tracking features. Built with Android Studio, Firebase, and Java.",
-      technologies: ["Android Studio", "Firebase", "Java", "XML"],
-      image: "/images/learn-up.jpg",
-      githubUrl: "https://github.com/Marwan-Gama/LearnUp",
-      featured: true,
-    },
-    {
-      id: "compiler-design",
-      title: "Designing Compiler",
-      description:
-        "Learned about lexical analysis, parsing, code generation, and optimization techniques. Built my own compiler using C++, C, and other tools (lex, yacc).",
-      technologies: ["C++", "C", "Lex", "Yacc", "Compiler Design"],
-      image: "/images/compiler.jpg",
-      githubUrl: "https://github.com/Marwan-Gama/Compiler-Design",
-      featured: true,
-    },
-    {
-      id: "web-app-development",
-      title: "Web Application Development",
-      description:
-        "Built a full-stack web app using ASP.NET MVC, C#, .NET Core, and SQL Server. Applied agile practices with Scrum, Git, JIRA, and CI/CD using Jenkins.",
-      technologies: ["ASP.NET MVC", "C#", ".NET Core", "SQL Server", "Jenkins", "JIRA"],
-      image: "/images/web-app.jpg",
-      githubUrl: "https://github.com/Marwan-Gama/WebApp-Development",
-      featured: false,
-    },
-    {
-      id: "siraj-ojt-project",
-      title: "Siraj OJT Program Project",
-      description:
-        "Collaborated on a web application project using Flask, Python, MySQL, GitHub, HTML, CSS, JavaScript, Bootstrap, React, AWS S3. Implemented automation testing with Pytest.",
-      technologies: ["Flask", "Python", "MySQL", "React", "AWS S3", "Pytest", "Bootstrap"],
-      image: "/images/siraj-project.jpg",
-      githubUrl: "https://github.com/Marwan-Gama/Siraj-OJT",
-      featured: false,
-    },
-    {
-      id: "ibtikar-app",
-      title: "Ibtikar Program App",
-      description:
-        "A research and development program in technology and education. Researched the job market and target audience, developed an app using No-Code technology (Bubble.io).",
-      technologies: ["Bubble.io", "No-Code", "Market Research", "UI/UX Design"],
-      image: "/images/ibtikar-app.jpg",
-      githubUrl: "https://github.com/Marwan-Gama/Ibtikar-App",
-      featured: false,
-    },
-  ];
-
-  /**
-   * Handle project card click to open GitHub repository
-   * @param url - GitHub repository URL
-   */
-  const handleProjectClick = (url: string): void => {
-    window.open(url, "_blank", "noopener,noreferrer");
-  };
-
-  // Animation variants for faster, smoother animations
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        duration: 0.3,
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.3, ease: "easeOut" }
-    }
-  };
-
-  const cardVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.4, ease: "easeOut" }
-    },
-    hover: {
-      y: -8,
-      transition: { duration: 0.2, ease: "easeOut" }
-    }
-  };
-
-  const buttonVariants = {
-    hover: {
-      scale: 1.02,
-      transition: { duration: 0.2, ease: "easeOut" }
-    },
-    tap: {
-      scale: 0.98,
-      transition: { duration: 0.1, ease: "easeOut" }
-    }
-  };
+  const projects: Project[] = useMemo(
+    () => [
+      {
+        id: "learn-up",
+        title: "Learn Up - Graduation Project",
+        description:
+          "An educational app that enhances classroom engagement with interactive learning, real-time communication, and progress tracking features. Built with Android Studio, Firebase, and Java.",
+        technologies: ["Android Studio", "Firebase", "Java", "XML"],
+        image: "/images/learn-up.jpg",
+        githubUrl: "https://github.com/Marwan-Gama/LearnUp",
+        liveUrl: "https://learnup-app.vercel.app",
+        featured: true,
+      },
+      {
+        id: "compiler-design",
+        title: "Designing Compiler",
+        description:
+          "Learned about lexical analysis, parsing, code generation, and optimization techniques. Built my own compiler using C++, C, and other tools (lex, yacc).",
+        technologies: ["C++", "C", "Lex", "Yacc", "Compiler Design"],
+        image: "/images/compiler.jpg",
+        githubUrl: "https://github.com/Marwan-Gama/Compiler-Design",
+        liveUrl: "https://compiler-demo.netlify.app",
+        featured: true,
+      },
+      {
+        id: "web-app-development",
+        title: "Web Application Development",
+        description:
+          "Built a full-stack web app using ASP.NET MVC, C#, .NET Core, and SQL Server. Applied agile practices with Scrum, Git, JIRA, and CI/CD using Jenkins.",
+        technologies: [
+          "ASP.NET MVC",
+          "C#",
+          ".NET Core",
+          "SQL Server",
+          "Jenkins",
+          "JIRA",
+        ],
+        image: "/images/web-app.jpg",
+        githubUrl: "https://github.com/Marwan-Gama/WebApp-Development",
+        liveUrl: "https://webapp-demo.azurewebsites.net",
+        featured: false,
+      },
+      {
+        id: "siraj-ojt-project",
+        title: "Siraj OJT Program Project",
+        description:
+          "Collaborated on a web application project using Flask, Python, MySQL, GitHub, HTML, CSS, JavaScript, Bootstrap, React, AWS S3. Implemented automation testing with Pytest.",
+        technologies: [
+          "Flask",
+          "Python",
+          "MySQL",
+          "React",
+          "AWS S3",
+          "Pytest",
+          "Bootstrap",
+        ],
+        image: "/images/siraj-project.jpg",
+        githubUrl: "https://github.com/Marwan-Gama/Siraj-OJT",
+        liveUrl: "https://siraj-ojt.herokuapp.com",
+        featured: false,
+      },
+      {
+        id: "ibtikar-app",
+        title: "Ibtikar Program App",
+        description:
+          "A research and development program in technology and education. Researched the job market and target audience, developed an app using No-Code technology (Bubble.io).",
+        technologies: [
+          "Bubble.io",
+          "No-Code",
+          "Market Research",
+          "UI/UX Design",
+        ],
+        image: "/images/ibtikar-app.jpg",
+        githubUrl: "https://github.com/Marwan-Gama/Ibtikar-App",
+        liveUrl: "https://ibtikar-app.bubbleapps.io",
+        featured: false,
+      },
+    ],
+    []
+  );
 
   return (
     <div className="projects-container">
-      <motion.div 
-        className="projects-content"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
+      <div className="projects-content">
         {/* Header Section */}
-        <motion.div 
-          className="projects-header"
-          variants={itemVariants}
-        >
+        <div className="projects-header">
           <h1 className="projects-title">My Projects</h1>
           <p className="projects-subtitle">
             Here are some of the projects I've worked on. Each project
             represents a unique challenge and learning experience in my journey
             as a developer.
           </p>
-        </motion.div>
+        </div>
 
         {/* Projects Grid */}
-        <motion.div 
-          className="projects-grid"
-          variants={containerVariants}
-        >
-          {projects.map((project, index) => (
-            <motion.div
-              key={project.id}
-              className={`project-card ${project.featured ? "featured" : ""}`}
-              variants={cardVariants}
-              whileHover="hover"
-              custom={index}
-            >
-              {project.featured && (
-                <motion.div 
-                  className="featured-badge"
-                  initial={{ opacity: 0, scale: 0.8 }}
-                  animate={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.3, delay: 0.2 }}
-                >
-                  Featured
-                </motion.div>
-              )}
-
-              <img
-                src={project.image}
-                alt={project.title}
-                className="project-image"
-              />
-
-              <div className="project-content">
-                <h3 className="project-title">{project.title}</h3>
-                <p className="project-description">{project.description}</p>
-
-                <div className="project-technologies">
-                  {project.technologies.map((tech) => (
-                    <span key={tech} className="technology-chip">
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="project-actions">
-                  <motion.button
-                    onClick={() =>
-                      project.githubUrl && handleProjectClick(project.githubUrl)
-                    }
-                    className="project-button project-button-primary"
-                    variants={buttonVariants}
-                    whileHover="hover"
-                    whileTap="tap"
-                  >
-                    View Code
-                  </motion.button>
-                  {project.liveUrl && (
-                    <motion.a
-                      href={project.liveUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="project-button project-button-secondary"
-                      variants={buttonVariants}
-                      whileHover="hover"
-                      whileTap="tap"
-                    >
-                      Live Demo
-                    </motion.a>
-                  )}
-                </div>
-              </div>
-            </motion.div>
+        <div className="projects-grid">
+          {projects.map((project) => (
+            <ProjectCard key={project.id} project={project} />
           ))}
-        </motion.div>
-      </motion.div>
+        </div>
+      </div>
     </div>
   );
 };
