@@ -6,7 +6,7 @@
  * - Technical skills and expertise
  * - Work experience timeline
  * - Educational background
- * - Animated sections with Framer Motion
+ * - Fast, smooth animations with Framer Motion
  */
 
 import { motion } from "framer-motion";
@@ -29,23 +29,32 @@ const About = (): JSX.Element => {
    * Technical skills data with icons and names
    */
   const skills = [
-    { name: "Python", icon: "🐍" },
     { name: "Java", icon: "☕" },
+    { name: "Python", icon: "🐍" },
     { name: "C++", icon: "⚡" },
+    { name: "C#", icon: "🔵" },
     { name: "JavaScript", icon: "📜" },
     { name: "TypeScript", icon: "📘" },
     { name: "HTML5", icon: "🌐" },
     { name: "CSS3", icon: "🎨" },
-    { name: "Git", icon: "📦" },
-    { name: "MongoDB", icon: "🗄️" },
-    { name: "NodeJS", icon: "🟢" },
     { name: "React", icon: "⚛️" },
-    { name: "Angular", icon: "🅰️" },
-    { name: ".NET Core", icon: "🔵" },
+    { name: "Node.js", icon: "🟢" },
+    { name: "MongoDB", icon: "🗄️" },
     { name: "MySQL", icon: "🐬" },
+    { name: "Spring Boot", icon: "🍃" },
+    { name: ".NET Core", icon: "🔵" },
+    { name: "Docker", icon: "🐳" },
+    { name: "Git", icon: "📦" },
     { name: "AWS", icon: "☁️" },
-    { name: "Problem Solving", icon: "🧩" },
+    { name: "Android Studio", icon: "📱" },
+    { name: "Firebase", icon: "🔥" },
+    { name: "Jenkins", icon: "🤖" },
+    { name: "JIRA", icon: "📋" },
+    { name: "Agile/Scrum", icon: "🔄" },
+    { name: "QA Testing", icon: "🧪" },
+    { name: "Data Structures", icon: "🏗️" },
     { name: "Algorithms", icon: "🔢" },
+    { name: "OOP", icon: "🎯" },
   ];
 
   /**
@@ -53,21 +62,28 @@ const About = (): JSX.Element => {
    */
   const education = [
     {
-      title: "B.Sc in Software Engineering",
+      title: "B.Sc. Software Engineering",
       period: "2020-2024",
-      institution: "Sami Shamoon College of Engineering",
+      institution: "Sami Shamoon College of Engineering (SCE)",
       location: "Beersheba, Israel",
+      description: "Graduated in 2024, Specialization in Cybersecurity",
     },
     {
       title: "Moshal Program Member",
       period: "2020-Present",
       description:
-        "Participating in a unique program that equips students with advanced academic and professional skills.",
+        "Awarded a global scholarship empowering top students with skills for success in academics, career, and life.",
     },
     {
       title: "Udemy Courses",
+      period: "2019-Present",
       description:
         "Web Development Bootcamp, Git & GitHub, HTML, CSS, and JavaScript.",
+    },
+    {
+      title: "Technion - Preparatory Year",
+      period: "2018-2019",
+      description: "Focused studies in Psychometry, Math, Physics.",
     },
   ];
 
@@ -77,92 +93,187 @@ const About = (): JSX.Element => {
   const experience = [
     {
       title: "Siraj - OJT Program",
-      period: "12/2023 – 03/2024",
+      period: "2024",
       description:
-        "Developed a web application using Flask, Python, MySQL, React, AWS S3, and more. Gained experience in automation testing with Pytest and network management.",
+        "On-the-Job Training (OJT) program for talented Bedouin graduates. Collaborated on a web application project using Flask, Python, MySQL, GitHub, HTML, CSS, JavaScript, Bootstrap, React, AWS S3. Implemented automation testing with Pytest and gained hands-on experience in basic networking concepts.",
     },
     {
-      title: "Ibtikar Program",
-      period: "08/2023 – 11/2023",
+      title: "MindCet - Ibtikar Program",
+      period: "2023",
       description:
-        "Researched the job market and developed a no-code application using Bubble.io.",
+        "A research and development program in technology and education. Researched the job market and target audience, developed an app that meets needs using No-Code technology (Bubble.io).",
     },
     {
-      title: "Private Tutor",
-      period: "2021 – 2022",
+      title: "Perach - Private Tutor",
+      period: "2021-2022",
       description:
-        "Taught programming languages (C, C++, Python, Assembly) and mathematics (calculus, logic) to college students.",
+        "Tutored college students in calculus, logic, computer architecture, and programming (C, C++, Python, Assembly).",
     },
   ];
+
+  /**
+   * Projects data
+   */
+  const projects = [
+    {
+      title: "Learn Up - Graduation Project",
+      period: "2023-2024",
+      description:
+        "An educational app that enhances classroom engagement with interactive learning, real-time communication, and progress tracking features. Built with Android Studio, Firebase, and Java.",
+    },
+    {
+      title: "Designing Compiler",
+      period: "2023",
+      description:
+        "Learned about lexical analysis, parsing, code generation, and optimization techniques. Built my own compiler using C++, C, and other tools (lex, yacc).",
+    },
+    {
+      title: "Web Application Development",
+      period: "2023",
+      description:
+        "Built a full-stack web app using ASP.NET MVC, C#, .NET Core, and SQL Server. Applied agile practices with Scrum, Git, JIRA, and CI/CD using Jenkins.",
+    },
+  ];
+
+  // Animation variants for faster, smoother animations
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 0.3,
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.3, ease: "easeOut" }
+    }
+  };
+
+  const skillVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: { duration: 0.2, ease: "easeOut" }
+    },
+    hover: {
+      scale: 1.05,
+      transition: { duration: 0.2, ease: "easeOut" }
+    }
+  };
 
   return (
     <div className="about-container">
       <div className="about-content">
         {/* About Me Section */}
-        <section className="about-section">
+        <motion.section 
+          className="about-section"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
           <div className="about-intro">
-            <h2 className="about-section-title">
+            <motion.h2 
+              className="about-section-title"
+              variants={itemVariants}
+            >
               <motion.span
                 animate={{ rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                transition={{ duration: 15, repeat: Infinity, ease: "linear" }}
                 style={{ willChange: "transform", transform: "translateZ(0)" }}
               >
                 🌟
               </motion.span>{" "}
               About Me
-            </h2>
-            <p className="about-intro-text">
-              🎓 <strong>Software Engineering Graduate</strong> from{" "}
-              <strong>Sami Shamoon College of Engineering</strong> with a
-              passion for solving complex problems and building innovative
-              solutions. I have hands-on experience in{" "}
-              <strong>web and software development</strong>, and I am constantly
-              improving my technical skills to make meaningful contributions to
-              the tech community.
-            </p>
-            <p className="about-intro-text">
-              🚀 I'm passionate about creating user-friendly applications and
-              solving real-world problems through code. My journey in software
-              development has equipped me with a strong foundation in both
-              frontend and backend technologies, allowing me to build complete
-              solutions from concept to deployment.
-            </p>
+            </motion.h2>
+            <motion.p 
+              className="about-intro-text"
+              variants={itemVariants}
+            >
+              🎓 <strong>Junior Software Engineer</strong> with hands-on experience in{" "}
+              <strong>Java, MERN Stack, .NET Core, Spring Boot</strong>, plus strong foundations in{" "}
+              <strong>QA, Data Structures, OOP, and Algorithms</strong>. Proficient in{" "}
+              <strong>C, C++, C#, Python, MySQL, MongoDB, and Docker</strong>.
+            </motion.p>
+            <motion.p 
+              className="about-intro-text"
+              variants={itemVariants}
+            >
+              🚀 Passionate about clean, scalable code, problem-solving, and delivering high-quality software in{" "}
+              <strong>Agile/Scrum environments</strong> under tight deadlines. I specialize in building robust applications 
+              and have experience with modern development practices including CI/CD, automation testing, and cloud services.
+            </motion.p>
+            <motion.p 
+              className="about-intro-text"
+              variants={itemVariants}
+            >
+              🌍 <strong>Languages:</strong> Arabic (Native) | Hebrew (Fluent) | English (Upper-Intermediate)
+            </motion.p>
           </div>
-        </section>
+        </motion.section>
 
         {/* Technical Skills Section */}
-        <section className="about-section">
+        <motion.section 
+          className="about-section"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
           <div className="skills-section">
-            <h2 className="about-section-title">Technical Skills</h2>
-            <div className="skills-grid">
+            <motion.h2 
+              className="about-section-title"
+              variants={itemVariants}
+            >
+              Technical Skills
+            </motion.h2>
+            <motion.div 
+              className="skills-grid"
+              variants={containerVariants}
+            >
               {skills.map((skill, index) => (
                 <motion.div
                   key={skill.name}
                   className="skill-chip"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  whileHover={{ scale: 1.05 }}
+                  variants={skillVariants}
+                  whileHover="hover"
+                  custom={index}
                 >
                   <span className="skill-icon">{skill.icon}</span>
                   <span>{skill.name}</span>
                 </motion.div>
               ))}
-            </div>
+            </motion.div>
           </div>
-        </section>
+        </motion.section>
 
         {/* Work Experience Section */}
-        <section className="about-section" ref={experienceRef}>
+        <motion.section 
+          className="about-section" 
+          ref={experienceRef}
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
           <div className="experience-section">
-            <h2 className="about-section-title">Work Experience</h2>
+            <motion.h2 
+              className="about-section-title"
+              variants={itemVariants}
+            >
+              Work Experience
+            </motion.h2>
             {experience.map((exp, index) => (
               <motion.div
                 key={exp.title}
                 className="experience-item"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
+                variants={itemVariants}
+                custom={index}
               >
                 <h3 className="experience-title">{exp.title}</h3>
                 <p className="experience-period">{exp.period}</p>
@@ -170,19 +281,58 @@ const About = (): JSX.Element => {
               </motion.div>
             ))}
           </div>
-        </section>
+        </motion.section>
+
+        {/* Projects Section */}
+        <motion.section 
+          className="about-section"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          <div className="projects-section">
+            <motion.h2 
+              className="about-section-title"
+              variants={itemVariants}
+            >
+              Key Projects
+            </motion.h2>
+            {projects.map((project, index) => (
+              <motion.div
+                key={project.title}
+                className="project-item"
+                variants={itemVariants}
+                custom={index}
+              >
+                <h3 className="project-title">{project.title}</h3>
+                <p className="project-period">{project.period}</p>
+                <p className="project-description">{project.description}</p>
+              </motion.div>
+            ))}
+          </div>
+        </motion.section>
 
         {/* Education Section */}
-        <section className="about-section" ref={educationRef}>
+        <motion.section 
+          className="about-section" 
+          ref={educationRef}
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
           <div className="education-section">
-            <h2 className="about-section-title">Education</h2>
+            <motion.h2 
+              className="about-section-title"
+              variants={itemVariants}
+            >
+              Education
+            </motion.h2>
             {education.map((edu, index) => (
               <motion.div
                 key={edu.title}
                 className="education-item"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
+                variants={itemVariants}
+                custom={index}
               >
                 <h3 className="education-title">{edu.title}</h3>
                 {edu.period && <p className="education-period">{edu.period}</p>}
@@ -198,10 +348,15 @@ const About = (): JSX.Element => {
               </motion.div>
             ))}
           </div>
-        </section>
+        </motion.section>
 
         {/* Social Links Section */}
-        <section className="about-section">
+        <motion.section 
+          className="about-section"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
           <div className="social-links">
             {Object.entries(SOCIAL_LINKS).map(([key, url], index) => {
               const icons = {
@@ -218,10 +373,9 @@ const About = (): JSX.Element => {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="social-link"
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  whileHover={{ scale: 1.05 }}
+                  variants={skillVariants}
+                  whileHover="hover"
+                  custom={index}
                 >
                   <span className="social-icon">
                     {icons[key as keyof typeof icons]}
@@ -231,7 +385,7 @@ const About = (): JSX.Element => {
               );
             })}
           </div>
-        </section>
+        </motion.section>
       </div>
     </div>
   );

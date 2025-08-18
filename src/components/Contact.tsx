@@ -97,31 +97,88 @@ const Contact = () => {
     setShowMessage(false);
   };
 
+  // Animation variants for faster, smoother animations
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        duration: 0.3,
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.3, ease: "easeOut" }
+    }
+  };
+
+  const formVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.4, ease: "easeOut" }
+    }
+  };
+
+  const socialVariants = {
+    hidden: { opacity: 0, scale: 0.8 },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      transition: { duration: 0.2, ease: "easeOut" }
+    },
+    hover: {
+      scale: 1.05,
+      transition: { duration: 0.2, ease: "easeOut" }
+    }
+  };
+
   return (
     <div className="contact-container">
-      <div className="contact-content">
+      <motion.div 
+        className="contact-content"
+        variants={containerVariants}
+        initial="hidden"
+        animate="visible"
+      >
         {/* Header Section */}
-        <div className="contact-header">
+        <motion.div 
+          className="contact-header"
+          variants={itemVariants}
+        >
           <h1 className="contact-title">Get In Touch</h1>
           <p className="contact-subtitle">
             I'm always interested in hearing about new opportunities and
             exciting projects. Feel free to reach out if you'd like to connect!
           </p>
-        </div>
+        </motion.div>
 
         {/* Contact Form */}
-        <div className="contact-form-container">
+        <motion.div 
+          className="contact-form-container"
+          variants={formVariants}
+        >
           <form className="contact-form" onSubmit={handleSubmit}>
             {showMessage && (
-              <div
+              <motion.div
                 className={
                   messageType === "success"
                     ? "success-message"
                     : "error-message-global"
                 }
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.3, ease: "easeOut" }}
               >
                 {messageText}
-              </div>
+              </motion.div>
             )}
 
             <div className="form-group">
@@ -171,10 +228,13 @@ const Contact = () => {
               />
             </div>
 
-            <button
+            <motion.button
               type="submit"
               className="submit-button"
               disabled={isSubmitting}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              transition={{ duration: 0.2 }}
             >
               {isSubmitting ? (
                 <>
@@ -184,21 +244,32 @@ const Contact = () => {
               ) : (
                 "Send Message"
               )}
-            </button>
+            </motion.button>
           </form>
-        </div>
+        </motion.div>
 
         {/* Social Links Section */}
-        <div className="social-links-section">
-          <h2 className="social-links-title">Connect With Me</h2>
-          <div className="social-links-grid">
+        <motion.div 
+          className="social-links-section"
+          variants={formVariants}
+        >
+          <motion.h2 
+            className="social-links-title"
+            variants={itemVariants}
+          >
+            Connect With Me
+          </motion.h2>
+          <motion.div 
+            className="social-links-grid"
+            variants={containerVariants}
+          >
             <motion.a
               href="https://linkedin.com/in/marwan-abu-gama"
               target="_blank"
               rel="noopener noreferrer"
               className="social-link-card linkedin"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              variants={socialVariants}
+              whileHover="hover"
             >
               <span className="social-icon">💼</span>
               <span className="social-text">LinkedIn</span>
@@ -209,37 +280,35 @@ const Contact = () => {
               target="_blank"
               rel="noopener noreferrer"
               className="social-link-card github"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              variants={socialVariants}
+              whileHover="hover"
             >
               <span className="social-icon">🐙</span>
               <span className="social-text">GitHub</span>
             </motion.a>
 
             <motion.a
-              href="mailto:marwan.abugama@gmail.com"
+              href="mailto:marwanabugama2000@gmail.com"
               className="social-link-card email"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              variants={socialVariants}
+              whileHover="hover"
             >
               <span className="social-icon">📧</span>
               <span className="social-text">Email</span>
             </motion.a>
 
             <motion.a
-              href="https://wa.me/972501234567"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="social-link-card whatsapp"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              href="tel:+972-50-551-9999"
+              className="social-link-card phone"
+              variants={socialVariants}
+              whileHover="hover"
             >
-              <span className="social-icon">💬</span>
-              <span className="social-text">WhatsApp</span>
+              <span className="social-icon">📞</span>
+              <span className="social-text">Phone</span>
             </motion.a>
-          </div>
-        </div>
-      </div>
+          </motion.div>
+        </motion.div>
+      </motion.div>
     </div>
   );
 };

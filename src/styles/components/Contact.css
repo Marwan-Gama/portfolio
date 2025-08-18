@@ -6,12 +6,13 @@
  * - Better form design with modern shadows
  * - Enhanced social media links
  * - Professional typography and spacing
+ * - Fast, simple animations for better performance
  * - Fixed navbar overlap issue
  */
 
 .contact-container {
   min-height: 100vh;
-  padding: 3rem 0;
+  padding: 2rem 0;
   background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 50%, #dee2e6 100%);
   position: relative;
   padding-top: 120px; /* Account for fixed navbar */
@@ -39,15 +40,15 @@
 
 .contact-header {
   text-align: center;
-  margin-bottom: 3rem;
-  animation: fadeInUp 0.8s ease-out;
+  margin-bottom: 2.5rem;
+  animation: fadeInUp 0.4s ease-out;
 }
 
 .contact-title {
-  font-size: clamp(2rem, 5vw, 3rem);
+  font-size: clamp(2rem, 5vw, 2.75rem);
   font-weight: 800;
   color: #667eea;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1.25rem;
   background: linear-gradient(45deg, #667eea, #764ba2);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -59,17 +60,17 @@
 .contact-title::after {
   content: "";
   position: absolute;
-  bottom: -10px;
+  bottom: -8px;
   left: 50%;
   transform: translateX(-50%);
-  width: 80px;
-  height: 4px;
+  width: 70px;
+  height: 3px;
   background: linear-gradient(45deg, #667eea, #764ba2);
   border-radius: 2px;
 }
 
 .contact-subtitle {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: #6c757d;
   max-width: 600px;
   margin: 0 auto;
@@ -80,34 +81,34 @@
 .contact-form-container {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
-  border-radius: 24px;
-  padding: 2.5rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1), 0 1px 8px rgba(0, 0, 0, 0.05);
-  margin-bottom: 2rem;
-  animation: fadeInUp 0.8s ease-out 0.2s both;
-  border-left: 6px solid #667eea;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1), 0 1px 8px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1.5rem;
+  animation: fadeInUp 0.4s ease-out 0.1s both;
+  border-left: 5px solid #667eea;
+  transition: all 0.2s ease;
 }
 
 .contact-form-container:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15), 0 1px 8px rgba(0, 0, 0, 0.05);
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15), 0 1px 8px rgba(0, 0, 0, 0.05);
 }
 
 .contact-form {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.25rem;
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 0.625rem;
 }
 
 .form-label {
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-weight: 600;
   color: #495057;
   margin-bottom: 0.25rem;
@@ -116,12 +117,12 @@
 
 .form-input,
 .form-textarea {
-  padding: 1rem 1.25rem;
+  padding: 0.875rem 1rem;
   border: 2px solid rgba(102, 126, 234, 0.2);
-  border-radius: 12px;
-  font-size: 1rem;
+  border-radius: 10px;
+  font-size: 0.95rem;
   font-family: inherit;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: all 0.2s ease;
   background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(10px);
 }
@@ -131,12 +132,12 @@
   outline: none;
   border-color: #667eea;
   background: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
-  transform: translateY(-2px);
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  transform: translateY(-1px);
 }
 
 .form-textarea {
-  min-height: 140px;
+  min-height: 120px;
   resize: vertical;
 }
 
@@ -148,30 +149,30 @@
 
 .error-message {
   color: #f5576c;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   margin-top: 0.25rem;
   font-weight: 500;
 }
 
 .submit-button {
-  padding: 1rem 2.5rem;
+  padding: 0.875rem 2rem;
   background: linear-gradient(45deg, #667eea, #764ba2);
   color: white;
   border: none;
-  border-radius: 12px;
-  font-size: 1.1rem;
+  border-radius: 10px;
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: all 0.2s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0.75rem;
-  min-height: 56px;
+  gap: 0.625rem;
+  min-height: 50px;
   position: relative;
   overflow: hidden;
   letter-spacing: 0.5px;
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
 }
 
 .submit-button::before {
@@ -187,7 +188,7 @@
     rgba(255, 255, 255, 0.2),
     transparent
   );
-  transition: left 0.5s;
+  transition: left 0.4s;
 }
 
 .submit-button:hover::before {
@@ -196,8 +197,8 @@
 
 .submit-button:hover:not(:disabled) {
   background: linear-gradient(45deg, #764ba2, #667eea);
-  transform: translateY(-3px);
-  box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
 }
 
 .submit-button:disabled {
@@ -207,10 +208,10 @@
 }
 
 .loading-spinner {
-  width: 24px;
-  height: 24px;
-  border: 3px solid transparent;
-  border-top: 3px solid white;
+  width: 20px;
+  height: 20px;
+  border: 2px solid transparent;
+  border-top: 2px solid white;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -227,47 +228,47 @@
 .social-links-section {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
-  border-radius: 24px;
-  padding: 2.5rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1), 0 1px 8px rgba(0, 0, 0, 0.05);
-  animation: fadeInUp 0.8s ease-out 0.4s both;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1), 0 1px 8px rgba(0, 0, 0, 0.05);
+  animation: fadeInUp 0.4s ease-out 0.2s both;
+  transition: all 0.2s ease;
 }
 
 .social-links-section:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15), 0 1px 8px rgba(0, 0, 0, 0.05);
+  transform: translateY(-3px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15), 0 1px 8px rgba(0, 0, 0, 0.05);
 }
 
 .social-links-title {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   font-weight: 700;
   color: #667eea;
-  margin-bottom: 2rem;
+  margin-bottom: 1.5rem;
   text-align: center;
   letter-spacing: -0.01em;
 }
 
 .social-links-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.25rem;
 }
 
 .social-link-card {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 1.25rem;
+  gap: 0.875rem;
+  padding: 1rem;
   background: linear-gradient(
     135deg,
     rgba(102, 126, 234, 0.1),
     rgba(118, 75, 162, 0.1)
   );
-  border-radius: 16px;
+  border-radius: 12px;
   text-decoration: none;
   color: #495057;
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: all 0.2s ease;
   border: 2px solid transparent;
   position: relative;
   overflow: hidden;
@@ -286,7 +287,7 @@
     rgba(255, 255, 255, 0.3),
     transparent
   );
-  transition: left 0.5s;
+  transition: left 0.4s;
 }
 
 .social-link-card:hover::before {
@@ -294,8 +295,8 @@
 }
 
 .social-link-card:hover {
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.2);
   border-color: #667eea;
   color: #667eea;
   text-decoration: none;
@@ -319,22 +320,22 @@
   border-color: #ea4335;
 }
 
-.social-link-card.whatsapp:hover {
+.social-link-card.phone:hover {
   background: linear-gradient(135deg, #25d366, #128c7e);
   color: white;
   border-color: #25d366;
 }
 
 .social-icon {
-  font-size: 1.8rem;
-  width: 32px;
+  font-size: 1.5rem;
+  width: 28px;
   text-align: center;
   filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
 }
 
 .social-text {
   font-weight: 600;
-  font-size: 1.1rem;
+  font-size: 1rem;
   letter-spacing: 0.5px;
 }
 
@@ -345,13 +346,13 @@
     rgba(76, 175, 80, 0.05)
   );
   color: #2e7d32;
-  padding: 1.25rem;
-  border-radius: 12px;
-  border-left: 6px solid #4caf50;
-  margin-bottom: 1.5rem;
-  animation: slideIn 0.3s ease-out;
+  padding: 1rem;
+  border-radius: 10px;
+  border-left: 5px solid #4caf50;
+  margin-bottom: 1.25rem;
+  animation: slideIn 0.2s ease-out;
   font-weight: 500;
-  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.1);
+  box-shadow: 0 3px 10px rgba(76, 175, 80, 0.1);
 }
 
 .error-message-global {
@@ -361,19 +362,19 @@
     rgba(245, 87, 108, 0.05)
   );
   color: #c62828;
-  padding: 1.25rem;
-  border-radius: 12px;
-  border-left: 6px solid #f5576c;
-  margin-bottom: 1.5rem;
-  animation: slideIn 0.3s ease-out;
+  padding: 1rem;
+  border-radius: 10px;
+  border-left: 5px solid #f5576c;
+  margin-bottom: 1.25rem;
+  animation: slideIn 0.2s ease-out;
   font-weight: 500;
-  box-shadow: 0 4px 12px rgba(245, 87, 108, 0.1);
+  box-shadow: 0 3px 10px rgba(245, 87, 108, 0.1);
 }
 
 @keyframes slideIn {
   from {
     opacity: 0;
-    transform: translateY(-10px);
+    transform: translateY(-8px);
   }
   to {
     opacity: 1;
@@ -385,7 +386,7 @@
 @keyframes fadeInUp {
   from {
     opacity: 0;
-    transform: translateY(30px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
@@ -405,11 +406,11 @@
   }
 
   .contact-title {
-    font-size: 2.2rem;
+    font-size: 2rem;
   }
 
   .contact-subtitle {
-    font-size: 1.1rem;
+    font-size: 1rem;
   }
 
   .contact-form-container,
@@ -422,13 +423,13 @@
   }
 
   .social-link-card {
-    padding: 1rem;
+    padding: 0.875rem;
   }
 }
 
 @media (max-width: 480px) {
   .contact-title {
-    font-size: 1.8rem;
+    font-size: 1.75rem;
   }
 
   .contact-form-container,
@@ -438,21 +439,21 @@
 
   .form-input,
   .form-textarea {
-    padding: 0.875rem 1rem;
-    font-size: 0.95rem;
+    padding: 0.75rem 0.875rem;
+    font-size: 0.9rem;
   }
 
   .submit-button {
-    padding: 0.875rem 2rem;
-    font-size: 1rem;
+    padding: 0.75rem 1.75rem;
+    font-size: 0.95rem;
   }
 
   .social-icon {
-    font-size: 1.5rem;
-    width: 28px;
+    font-size: 1.4rem;
+    width: 24px;
   }
 
   .social-text {
-    font-size: 1rem;
+    font-size: 0.95rem;
   }
 }
