@@ -1,30 +1,32 @@
 /**
  * Navigation Bar Component
  *
- * A responsive navigation bar that includes:
+ * A clean and simple responsive navigation bar with:
  * - Desktop navigation with horizontal menu
- * - Mobile navigation with hamburger menu and drawer
+ * - Mobile navigation with simple dropdown
  * - Active page highlighting
- * - Smooth transitions and animations
+ * - Minimal animations for better performance
+ * - Keyboard navigation support
  */
 
 import { Link as RouterLink, useLocation, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 // Import constants
 import { NAV_ITEMS } from "../constants";
 import "../styles/components/Navbar.css";
 
 /**
- * Navigation bar component with responsive design
+ * Navigation bar component with clean responsive design
  * @returns JSX.Element - The rendered navigation bar
  */
 const Navbar = (): JSX.Element => {
   // Hooks for navigation and responsive design
   const location = useLocation();
   const navigate = useNavigate();
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
 
-  // State for mobile drawer
+  // State for mobile menu
   const [mobileOpen, setMobileOpen] = useState<boolean>(false);
   const [isMobile, setIsMobile] = useState<boolean>(false);
 
@@ -40,8 +42,40 @@ const Navbar = (): JSX.Element => {
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
+  // Close mobile menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        mobileMenuRef.current &&
+        !mobileMenuRef.current.contains(event.target as Node)
+      ) {
+        setMobileOpen(false);
+      }
+    };
+
+    if (mobileOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [mobileOpen]);
+
+  // Handle escape key to close mobile menu
+  useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape" && mobileOpen) {
+        setMobileOpen(false);
+      }
+    };
+
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [mobileOpen]);
+
   /**
-   * Handles navigation to home page and closes mobile drawer
+   * Handles navigation to home page and closes mobile menu
    */
   const handleNameClick = (): void => {
     navigate("/");
@@ -49,111 +83,114 @@ const Navbar = (): JSX.Element => {
   };
 
   /**
-   * Toggles the mobile drawer open/closed state
+   * Toggles the mobile menu open/closed state
    */
-  const handleDrawerToggle = (): void => {
+  const handleMobileToggle = (): void => {
     setMobileOpen(!mobileOpen);
   };
 
   /**
-   * Closes the mobile drawer when a navigation item is clicked
+   * Closes the mobile menu when a navigation item is clicked
    */
   const handleNavItemClick = (): void => {
     setMobileOpen(false);
   };
 
   /**
-   * Renders the mobile navigation drawer
-   * @returns JSX.Element - The mobile drawer content
+   * Handles keyboard navigation for mobile menu
    */
-  const renderMobileDrawer = (): JSX.Element => (
-    <div className={`mobile-drawer ${mobileOpen ? "open" : ""}`}>
-      {/* Drawer header with name and close button */}
-      <div className="drawer-header">
-        <div className="brand-name" onClick={handleNameClick}>
-          Marwan Abu Gama
-        </div>
-        <button onClick={handleDrawerToggle} className="drawer-close-button">
-          <svg
-            className="drawer-close-icon"
-            viewBox="0 0 24 24"
-            fill="currentColor"
-          >
-            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
-          </svg>
-        </button>
-      </div>
-
-      {/* Navigation items list */}
-      <ul className="mobile-nav-menu">
-        {NAV_ITEMS.map((item) => (
-          <li key={item.path} className="mobile-nav-item">
-            <RouterLink
-              to={item.path}
-              onClick={handleNavItemClick}
-              className={`mobile-nav-link ${
-                location.pathname === item.path ? "active" : ""
-              }`}
-            >
-              {item.label}
-            </RouterLink>
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
+  const handleKeyDown = (event: React.KeyboardEvent): void => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      handleMobileToggle();
+    }
+  };
 
   return (
-    <>
-      <nav className="navbar">
-        <div className="navbar-container">
-          {/* Brand Name */}
-          <div className="brand-name" onClick={handleNameClick}>
-            Marwan Abu Gama
-          </div>
+    <nav className="navbar" role="navigation" aria-label="Main navigation">
+      <div className="navbar-container">
+        {/* Brand Name */}
+        <div
+          className="brand-name"
+          onClick={handleNameClick}
+          onKeyDown={(e) => e.key === "Enter" && handleNameClick()}
+          tabIndex={0}
+          role="button"
+          aria-label="Go to home page"
+        >
+          Marwan Abu Gama
+        </div>
 
-          {/* Desktop Navigation */}
-          <ul className="nav-menu">
+        {/* Desktop Navigation */}
+        <ul className="nav-menu" role="menubar">
+          {NAV_ITEMS.map((item) => (
+            <li key={item.path} className="nav-item" role="none">
+              <RouterLink
+                to={item.path}
+                className={`nav-link ${
+                  location.pathname === item.path ? "active" : ""
+                }`}
+                role="menuitem"
+                aria-current={
+                  location.pathname === item.path ? "page" : undefined
+                }
+              >
+                {item.label}
+              </RouterLink>
+            </li>
+          ))}
+        </ul>
+
+        {/* Mobile Menu Button */}
+        {isMobile && (
+          <button
+            onClick={handleMobileToggle}
+            onKeyDown={handleKeyDown}
+            className="mobile-menu-button"
+            aria-label="Toggle mobile menu"
+            aria-expanded={mobileOpen}
+            aria-controls="mobile-menu"
+          >
+            <span className={`hamburger ${mobileOpen ? "open" : ""}`}>
+              <span className="line"></span>
+              <span className="line"></span>
+              <span className="line"></span>
+            </span>
+          </button>
+        )}
+      </div>
+
+      {/* Mobile Menu Dropdown */}
+      {isMobile && (
+        <div
+          ref={mobileMenuRef}
+          id="mobile-menu"
+          className={`mobile-menu ${mobileOpen ? "open" : ""}`}
+          role="menu"
+          aria-hidden={!mobileOpen}
+        >
+          <ul className="mobile-nav-menu">
             {NAV_ITEMS.map((item) => (
-              <li key={item.path} className="nav-item">
+              <li key={item.path} className="mobile-nav-item" role="none">
                 <RouterLink
                   to={item.path}
-                  className={`nav-link ${
+                  onClick={handleNavItemClick}
+                  className={`mobile-nav-link ${
                     location.pathname === item.path ? "active" : ""
                   }`}
+                  role="menuitem"
+                  aria-current={
+                    location.pathname === item.path ? "page" : undefined
+                  }
                 >
                   {item.label}
                 </RouterLink>
               </li>
             ))}
           </ul>
-
-          {/* Mobile Menu Button */}
-          {isMobile && (
-            <button onClick={handleDrawerToggle} className="mobile-menu-button">
-              <svg
-                className="mobile-menu-icon"
-                viewBox="0 0 24 24"
-                fill="currentColor"
-              >
-                <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
-              </svg>
-            </button>
-          )}
         </div>
-      </nav>
-
-      {/* Mobile Drawer */}
-      {isMobile && renderMobileDrawer()}
-
-      {/* Overlay for mobile drawer */}
-      {isMobile && (
-        <div
-          className={`overlay ${mobileOpen ? "open" : ""}`}
-          onClick={handleDrawerToggle}
-        />
       )}
-    </>
+    </nav>
   );
 };
 
