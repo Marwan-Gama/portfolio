@@ -223,7 +223,8 @@ const Contact = () => {
                 </a>
 
                 <a
-                  href="tel:+972-50-551-9999"
+                  href="https://wa.me/972505519999"
+                  target="_blank"
                   className="social-link-card phone"
                 >
                   <span className="social-icon">📞</span>
