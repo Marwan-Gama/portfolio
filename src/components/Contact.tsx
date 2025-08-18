@@ -1,4 +1,3 @@
-import { motion } from "framer-motion";
 import { useState, useCallback } from "react";
 import API_CONFIG from "../config/api";
 import "../styles/components/Contact.css";
@@ -97,88 +96,31 @@ const Contact = () => {
     setShowMessage(false);
   };
 
-  // Animation variants for faster, smoother animations
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        duration: 0.3,
-        staggerChildren: 0.1
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.3, ease: "easeOut" }
-    }
-  };
-
-  const formVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.4, ease: "easeOut" }
-    }
-  };
-
-  const socialVariants = {
-    hidden: { opacity: 0, scale: 0.8 },
-    visible: {
-      opacity: 1,
-      scale: 1,
-      transition: { duration: 0.2, ease: "easeOut" }
-    },
-    hover: {
-      scale: 1.05,
-      transition: { duration: 0.2, ease: "easeOut" }
-    }
-  };
-
   return (
     <div className="contact-container">
-      <motion.div 
-        className="contact-content"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
+      <div className="contact-content">
         {/* Header Section */}
-        <motion.div 
-          className="contact-header"
-          variants={itemVariants}
-        >
+        <div className="contact-header">
           <h1 className="contact-title">Get In Touch</h1>
           <p className="contact-subtitle">
             I'm always interested in hearing about new opportunities and
             exciting projects. Feel free to reach out if you'd like to connect!
           </p>
-        </motion.div>
+        </div>
 
         {/* Contact Form */}
-        <motion.div 
-          className="contact-form-container"
-          variants={formVariants}
-        >
+        <div className="contact-form-container">
           <form className="contact-form" onSubmit={handleSubmit}>
             {showMessage && (
-              <motion.div
+              <div
                 className={
                   messageType === "success"
                     ? "success-message"
                     : "error-message-global"
                 }
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, ease: "easeOut" }}
               >
                 {messageText}
-              </motion.div>
+              </div>
             )}
 
             <div className="form-group">
@@ -228,13 +170,10 @@ const Contact = () => {
               />
             </div>
 
-            <motion.button
+            <button
               type="submit"
               className="submit-button"
               disabled={isSubmitting}
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              transition={{ duration: 0.2 }}
             >
               {isSubmitting ? (
                 <>
@@ -244,71 +183,51 @@ const Contact = () => {
               ) : (
                 "Send Message"
               )}
-            </motion.button>
+            </button>
           </form>
-        </motion.div>
+        </div>
 
         {/* Social Links Section */}
-        <motion.div 
-          className="social-links-section"
-          variants={formVariants}
-        >
-          <motion.h2 
-            className="social-links-title"
-            variants={itemVariants}
-          >
-            Connect With Me
-          </motion.h2>
-          <motion.div 
-            className="social-links-grid"
-            variants={containerVariants}
-          >
-            <motion.a
-              href="https://linkedin.com/in/marwan-abu-gama"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="social-link-card linkedin"
-              variants={socialVariants}
-              whileHover="hover"
-            >
-              <span className="social-icon">💼</span>
-              <span className="social-text">LinkedIn</span>
-            </motion.a>
+        <div className="social-links-section">
+          <div className="social-links-header">
+            <h2 className="social-links-title">Connect With Me</h2>
+            <div className="social-links-grid">
+              <a
+                href="https://linkedin.com/in/marwan-abu-gama"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="social-link-card linkedin"
+              >
+                <span className="social-icon">💼</span>
+                <span className="social-text">LinkedIn</span>
+              </a>
 
-            <motion.a
-              href="https://github.com/Marwan-Gama"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="social-link-card github"
-              variants={socialVariants}
-              whileHover="hover"
-            >
-              <span className="social-icon">🐙</span>
-              <span className="social-text">GitHub</span>
-            </motion.a>
+              <a
+                href="https://github.com/Marwan-Gama"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="social-link-card github"
+              >
+                <span className="social-icon">🐙</span>
+                <span className="social-text">GitHub</span>
+              </a>
 
-            <motion.a
-              href="mailto:marwanabugama2000@gmail.com"
-              className="social-link-card email"
-              variants={socialVariants}
-              whileHover="hover"
-            >
-              <span className="social-icon">📧</span>
-              <span className="social-text">Email</span>
-            </motion.a>
+              <a
+                href="mailto:marwanabugama2000@gmail.com"
+                className="social-link-card email"
+              >
+                <span className="social-icon">📧</span>
+                <span className="social-text">Email</span>
+              </a>
 
-            <motion.a
-              href="tel:+972-50-551-9999"
-              className="social-link-card phone"
-              variants={socialVariants}
-              whileHover="hover"
-            >
-              <span className="social-icon">📞</span>
-              <span className="social-text">Phone</span>
-            </motion.a>
-          </motion.div>
-        </motion.div>
-      </motion.div>
+              <a href="tel:+972-50-551-9999" className="social-link-card phone">
+                <span className="social-icon">📞</span>
+                <span className="social-text">Phone</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
