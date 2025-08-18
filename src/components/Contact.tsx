@@ -108,122 +108,128 @@ const Contact = () => {
           </p>
         </div>
 
-        {/* Contact Form */}
-        <div className="contact-form-container">
-          <form className="contact-form" onSubmit={handleSubmit}>
-            {showMessage && (
-              <div
-                className={
-                  messageType === "success"
-                    ? "success-message"
-                    : "error-message-global"
-                }
-              >
-                {messageText}
-              </div>
-            )}
-
-            <div className="form-group">
-              <label htmlFor="name" className="form-label">
-                Name
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                className="form-input"
-                placeholder="Your name"
-                required
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="email" className="form-label">
-                Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                className="form-input"
-                placeholder="your.email@example.com"
-                required
-              />
-            </div>
-
-            <div className="form-group">
-              <label htmlFor="message" className="form-label">
-                Message
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                className="form-textarea"
-                placeholder="Tell me about your project or opportunity..."
-                required
-              />
-            </div>
-
-            <button
-              type="submit"
-              className="submit-button"
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? (
-                <>
-                  <div className="loading-spinner"></div>
-                  Sending...
-                </>
-              ) : (
-                "Send Message"
+        {/* Main Content - Form and Social Links Side by Side */}
+        <div className="contact-main-content">
+          {/* Contact Form */}
+          <div className="contact-form-container">
+            <form className="contact-form" onSubmit={handleSubmit}>
+              {showMessage && (
+                <div
+                  className={
+                    messageType === "success"
+                      ? "success-message"
+                      : "error-message-global"
+                  }
+                >
+                  {messageText}
+                </div>
               )}
-            </button>
-          </form>
-        </div>
 
-        {/* Social Links Section */}
-        <div className="social-links-section">
-          <div className="social-links-header">
-            <h2 className="social-links-title">Connect With Me</h2>
-            <div className="social-links-grid">
-              <a
-                href="https://linkedin.com/in/marwan-abu-gama"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="social-link-card linkedin"
+              <div className="form-group">
+                <label htmlFor="name" className="form-label">
+                  Name
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleChange}
+                  className="form-input"
+                  placeholder="Your name"
+                  required
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="email" className="form-label">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  className="form-input"
+                  placeholder="your.email@example.com"
+                  required
+                />
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="message" className="form-label">
+                  Message
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  className="form-textarea"
+                  placeholder="Tell me about your project or opportunity..."
+                  required
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="submit-button"
+                disabled={isSubmitting}
               >
-                <span className="social-icon">💼</span>
-                <span className="social-text">LinkedIn</span>
-              </a>
+                {isSubmitting ? (
+                  <>
+                    <div className="loading-spinner"></div>
+                    Sending...
+                  </>
+                ) : (
+                  "Send Message"
+                )}
+              </button>
+            </form>
+          </div>
 
-              <a
-                href="https://github.com/Marwan-Gama"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="social-link-card github"
-              >
-                <span className="social-icon">🐙</span>
-                <span className="social-text">GitHub</span>
-              </a>
+          {/* Social Links Section */}
+          <div className="social-links-section">
+            <div className="social-links-header">
+              <h2 className="social-links-title">Connect With Me</h2>
+              <div className="social-links-grid">
+                <a
+                  href="https://linkedin.com/in/marwan-abu-gama"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="social-link-card linkedin"
+                >
+                  <span className="social-icon">💼</span>
+                  <span className="social-text">LinkedIn</span>
+                </a>
 
-              <a
-                href="mailto:marwanabugama2000@gmail.com"
-                className="social-link-card email"
-              >
-                <span className="social-icon">📧</span>
-                <span className="social-text">Email</span>
-              </a>
+                <a
+                  href="https://github.com/Marwan-Gama"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="social-link-card github"
+                >
+                  <span className="social-icon">🐙</span>
+                  <span className="social-text">GitHub</span>
+                </a>
 
-              <a href="tel:+972-50-551-9999" className="social-link-card phone">
-                <span className="social-icon">📞</span>
-                <span className="social-text">Phone</span>
-              </a>
+                <a
+                  href="mailto:marwanabugama2000@gmail.com"
+                  className="social-link-card email"
+                >
+                  <span className="social-icon">📧</span>
+                  <span className="social-text">Email</span>
+                </a>
+
+                <a
+                  href="tel:+972-50-551-9999"
+                  className="social-link-card phone"
+                >
+                  <span className="social-icon">📞</span>
+                  <span className="social-text">Phone</span>
+                </a>
+              </div>
             </div>
           </div>
         </div>

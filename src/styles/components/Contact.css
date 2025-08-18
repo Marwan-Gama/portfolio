@@ -7,6 +7,7 @@
  * - Optimized for no-scroll experience
  * - Professional typography and spacing
  * - Fixed navbar overlap issue
+ * - Side-by-side layout for form and social links
  */
 
 .contact-container {
@@ -30,7 +31,7 @@
 }
 
 .contact-content {
-  max-width: 700px;
+  max-width: 1200px; /* Increased for side-by-side layout */
   margin: 0 auto;
   padding: 0 1.5rem;
   position: relative;
@@ -76,14 +77,22 @@
   font-weight: 400;
 }
 
+/* New side-by-side layout container */
+.contact-main-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Two equal columns */
+  gap: 2rem; /* Space between form and social links */
+  align-items: start; /* Align items to the top */
+}
+
 .contact-form-container {
   background: rgba(255, 255, 255, 0.95);
   backdrop-filter: blur(10px);
   border-radius: 15px; /* Smaller radius */
   padding: 1.5rem; /* Reduced padding */
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1), 0 1px 4px rgba(0, 0, 0, 0.05);
-  margin-bottom: 1rem; /* Reduced margin */
   border-left: 4px solid #667eea; /* Thinner border */
+  height: fit-content; /* Only take needed height */
 }
 
 .contact-form {
@@ -199,13 +208,13 @@
   border-radius: 15px; /* Smaller radius */
   padding: 1.5rem; /* Reduced padding */
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1), 0 1px 4px rgba(0, 0, 0, 0.05);
+  height: fit-content; /* Only take needed height */
 }
 
 .social-links-header {
   display: flex;
-  align-items: center;
-  gap: 2rem;
-  flex-wrap: wrap;
+  flex-direction: column;
+  gap: 1.5rem;
 }
 
 .social-links-title {
@@ -214,14 +223,13 @@
   color: #667eea;
   margin: 0; /* Remove margin since it's now in flex layout */
   letter-spacing: -0.01em;
-  white-space: nowrap;
+  text-align: center;
 }
 
 .social-links-grid {
   display: flex;
+  flex-direction: column;
   gap: 1rem; /* Reduced gap */
-  flex-wrap: wrap;
-  flex: 1;
 }
 
 .social-link-card {
@@ -318,6 +326,17 @@
 }
 
 /* Responsive Design */
+@media (max-width: 1024px) {
+  .contact-main-content {
+    grid-template-columns: 1fr; /* Stack on smaller screens */
+    gap: 1.5rem;
+  }
+
+  .contact-content {
+    max-width: 700px; /* Back to original max-width */
+  }
+}
+
 @media (max-width: 768px) {
   .contact-container {
     padding: 0.5rem 0;
@@ -342,19 +361,15 @@
   }
 
   .social-links-header {
-    flex-direction: column;
-    align-items: flex-start;
     gap: 1rem;
   }
 
   .social-links-title {
     text-align: center;
-    width: 100%;
   }
 
   .social-links-grid {
     width: 100%;
-    justify-content: center;
   }
 
   .social-link-card {
