@@ -1,5 +1,4 @@
 import { useState, useCallback } from "react";
-import API_CONFIG from "../config/api";
 import "../styles/components/Contact.css";
 
 const Contact = () => {
@@ -14,9 +13,6 @@ const Contact = () => {
   );
   const [messageText, setMessageText] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-
-  // Get API URL from configuration
-  const API_URL = API_CONFIG.getApiUrl();
 
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -41,35 +37,30 @@ const Contact = () => {
       }
 
       setIsSubmitting(true);
-
-      // Debug logging
-      console.log("🌐 API URL being used:", API_URL);
-      console.log("📤 Sending data:", formData);
+      setMessageText("Sending...");
+      setShowMessage(true);
 
       try {
-        const response = await fetch(API_URL, {
+        const formDataToSend = new FormData();
+        formDataToSend.append("name", formData.name.trim());
+        formDataToSend.append("email", formData.email.trim());
+        formDataToSend.append("message", formData.message.trim());
+        formDataToSend.append(
+          "access_key",
+          import.meta.env.VITE_WEB3FORMS_ACCESS_KEY
+        );
+
+        const response = await fetch("https://api.web3forms.com/submit", {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            name: formData.name.trim(),
-            email: formData.email.trim(),
-            message: formData.message.trim(),
-          }),
+          body: formDataToSend,
         });
 
-        console.log("📥 Response status:", response.status);
-        console.log("📥 Response headers:", response.headers);
-
         const data = await response.json();
-        console.log("📥 Response data:", data);
 
-        if (response.ok && data.success) {
+        if (data.success) {
           setMessageType("success");
           setMessageText(
-            data.message ||
-              "Message sent successfully! I'll get back to you soon."
+            "Message sent successfully! I'll get back to you soon."
           );
           setFormData({ name: "", email: "", message: "" });
         } else {
@@ -86,10 +77,9 @@ const Contact = () => {
         );
       } finally {
         setIsSubmitting(false);
-        setShowMessage(true);
       }
     },
-    [formData, API_URL]
+    [formData]
   );
 
   const handleCloseMessage = () => {
