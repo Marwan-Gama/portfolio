@@ -1,19 +1,38 @@
 import { useState, useCallback } from "react";
 import "../styles/components/Contact.css";
 
+// Type definitions for better type safety
+interface FormData {
+  name: string;
+  email: string;
+  message: string;
+}
+
+interface Web3FormsResponse {
+  success: boolean;
+  message?: string;
+}
+
+type MessageType = "success" | "error";
+
 const Contact = () => {
-  const [formData, setFormData] = useState({
+  // State management for form data
+  const [formData, setFormData] = useState<FormData>({
     name: "",
     email: "",
     message: "",
   });
+
+  // State management for UI feedback
   const [showMessage, setShowMessage] = useState(false);
-  const [messageType, setMessageType] = useState<"success" | "error">(
-    "success"
-  );
+  const [messageType, setMessageType] = useState<MessageType>("success");
   const [messageText, setMessageText] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  /**
+   * Handle input changes for form fields
+   * Updates the form data state when user types
+   */
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
       const { name, value } = e.target;
@@ -25,63 +44,113 @@ const Contact = () => {
     []
   );
 
+  /**
+   * Validate form data before submission
+   * Returns true if all required fields are filled
+   */
+  const validateForm = (data: FormData): boolean => {
+    return !!(data.name.trim() && data.email.trim() && data.message.trim());
+  };
+
+  /**
+   * Show message to user with specified type and text
+   */
+  const showUserMessage = (type: MessageType, text: string) => {
+    setMessageType(type);
+    setMessageText(text);
+    setShowMessage(true);
+  };
+
+  /**
+   * Reset form data to empty state
+   */
+  const resetForm = () => {
+    setFormData({ name: "", email: "", message: "" });
+  };
+
+  /**
+   * Handle form submission to Web3Forms API
+   * Sends form data and handles response/errors
+   */
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault();
 
-      if (!formData.name || !formData.email || !formData.message) {
-        setMessageType("error");
-        setMessageText("Please fill in all fields before submitting.");
-        setShowMessage(true);
+      // Validate form data
+      if (!validateForm(formData)) {
+        showUserMessage(
+          "error",
+          "Please fill in all fields before submitting."
+        );
         return;
       }
 
+      // Start submission process
       setIsSubmitting(true);
-      setMessageText("Sending...");
-      setShowMessage(true);
+      showUserMessage("success", "Sending...");
 
       try {
+        // Prepare form data for Web3Forms API
         const formDataToSend = new FormData();
         formDataToSend.append("name", formData.name.trim());
         formDataToSend.append("email", formData.email.trim());
         formDataToSend.append("message", formData.message.trim());
         formDataToSend.append(
           "access_key",
-          "0f7485d4-8dfd-4e2b-9746-8d221bab5b7e" // Your Web3Forms access key
+          "0f7485d4-8dfd-4e2b-9746-8d221bab5b7e" // Web3Forms access key
         );
 
+        // Send request to Web3Forms API
         const response = await fetch("https://api.web3forms.com/submit", {
           method: "POST",
           body: formDataToSend,
         });
 
-        const data = await response.json();
+        // Check if request was successful
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
 
+        // Parse response data
+        const data: Web3FormsResponse = await response.json();
+
+        // Handle API response
         if (data.success) {
-          setMessageType("success");
-          setMessageText(
+          showUserMessage(
+            "success",
             "Message sent successfully! I'll get back to you soon."
           );
-          setFormData({ name: "", email: "", message: "" });
+          resetForm();
         } else {
-          setMessageType("error");
-          setMessageText(
+          showUserMessage(
+            "error",
             data.message || "Failed to send message. Please try again."
           );
         }
       } catch (error) {
+        // Handle network and API errors
         console.error("❌ Contact form error:", error);
-        setMessageType("error");
-        setMessageText(
+
+        // Type-safe error handling
+        const errorMessage =
+          error instanceof Error ? error.message : "Unknown error";
+
+        // Show user-friendly error message
+        showUserMessage(
+          "error",
           "Network error. Please check your connection and try again."
         );
       } finally {
+        // Always stop loading state
         setIsSubmitting(false);
       }
     },
     [formData]
   );
 
+  /**
+   * Close the message display
+   */
   const handleCloseMessage = () => {
     setShowMessage(false);
   };
@@ -103,6 +172,7 @@ const Contact = () => {
           {/* Contact Form */}
           <div className="contact-form-container">
             <form className="contact-form" onSubmit={handleSubmit}>
+              {/* Success/Error Message Display */}
               {showMessage && (
                 <div
                   className={
@@ -115,6 +185,7 @@ const Contact = () => {
                 </div>
               )}
 
+              {/* Name Input Field */}
               <div className="form-group">
                 <label htmlFor="name" className="form-label">
                   Name
@@ -131,6 +202,7 @@ const Contact = () => {
                 />
               </div>
 
+              {/* Email Input Field */}
               <div className="form-group">
                 <label htmlFor="email" className="form-label">
                   Email
@@ -147,6 +219,7 @@ const Contact = () => {
                 />
               </div>
 
+              {/* Message Textarea */}
               <div className="form-group">
                 <label htmlFor="message" className="form-label">
                   Message
@@ -162,6 +235,7 @@ const Contact = () => {
                 />
               </div>
 
+              {/* Submit Button */}
               <button
                 type="submit"
                 className="submit-button"
@@ -184,6 +258,7 @@ const Contact = () => {
             <div className="social-links-header">
               <h2 className="social-links-title">Connect With Me</h2>
               <div className="social-links-grid">
+                {/* LinkedIn Link */}
                 <a
                   href="https://linkedin.com/in/marwan-abu-gama"
                   target="_blank"
@@ -194,6 +269,7 @@ const Contact = () => {
                   <span className="social-text">LinkedIn</span>
                 </a>
 
+                {/* GitHub Link */}
                 <a
                   href="https://github.com/Marwan-Gama"
                   target="_blank"
@@ -204,6 +280,7 @@ const Contact = () => {
                   <span className="social-text">GitHub</span>
                 </a>
 
+                {/* Email Link */}
                 <a
                   href="mailto:marwanabugama2000@gmail.com"
                   className="social-link-card email"
@@ -212,6 +289,7 @@ const Contact = () => {
                   <span className="social-text">Email</span>
                 </a>
 
+                {/* Phone/WhatsApp Link */}
                 <a
                   href="https://wa.me/972505519999"
                   target="_blank"
