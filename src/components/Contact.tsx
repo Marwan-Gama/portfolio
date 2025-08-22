@@ -69,12 +69,37 @@ const Contact = () => {
   };
 
   /**
+   * Check if current environment supports HTTPS
+   */
+  const isSecureContext = () => {
+    return window.isSecureContext || location.protocol === "https:";
+  };
+
+  /**
+   * Check if device is mobile
+   */
+  const isMobileDevice = () => {
+    return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    );
+  };
+
+  /**
    * Handle form submission to Web3Forms API
    * Sends form data and handles response/errors
    */
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault();
+
+      // Check HTTPS requirement for mobile
+      if (isMobileDevice() && !isSecureContext()) {
+        showUserMessage(
+          "error",
+          "HTTPS is required for mobile devices. Please use a secure connection."
+        );
+        return;
+      }
 
       // Validate form data
       if (!validateForm(formData)) {
@@ -100,46 +125,126 @@ const Contact = () => {
           "0f7485d4-8dfd-4e2b-9746-8d221bab5b7e" // Web3Forms access key
         );
 
-        // Send request to Web3Forms API
-        const response = await fetch("https://api.web3forms.com/submit", {
-          method: "POST",
-          body: formDataToSend,
-        });
+        // Ensure HTTPS and proper API URL
+        const apiUrl = "https://api.web3forms.com/submit";
 
-        // Check if request was successful
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
+        // Mobile-friendly fetch with proper headers and CORS
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout for mobile
 
-        // Parse response data
-        const data: Web3FormsResponse = await response.json();
+        try {
+          const response = await fetch(apiUrl, {
+            method: "POST",
+            body: formDataToSend,
+            // Mobile and CORS friendly options
+            mode: "cors",
+            cache: "no-cache",
+            credentials: "omit",
+            signal: controller.signal,
+            headers: {
+              Accept: "application/json",
+              "User-Agent": navigator.userAgent,
+            },
+          });
 
-        // Handle API response
-        if (data.success) {
-          showUserMessage(
-            "success",
-            "Message sent successfully! I'll get back to you soon."
-          );
-          resetForm();
-        } else {
-          showUserMessage(
-            "error",
-            data.message || "Failed to send message. Please try again."
-          );
+          clearTimeout(timeoutId);
+
+          // Check if request was successful
+          if (!response.ok) {
+            // Handle specific HTTP error codes
+            switch (response.status) {
+              case 400:
+                throw new Error("Invalid form data. Please check your input.");
+              case 401:
+                throw new Error(
+                  "Authentication failed. Please try again later."
+                );
+              case 403:
+                throw new Error("Access denied. Please try again later.");
+              case 429:
+                throw new Error(
+                  "Too many requests. Please wait a moment and try again."
+                );
+              case 500:
+                throw new Error("Server error. Please try again later.");
+              default:
+                throw new Error(
+                  `Server error (${response.status}). Please try again.`
+                );
+            }
+          }
+
+          // Parse response data
+          const data: Web3FormsResponse = await response.json();
+
+          // Handle API response
+          if (data.success) {
+            showUserMessage(
+              "success",
+              "Message sent successfully! I'll get back to you soon."
+            );
+            resetForm();
+          } else {
+            // Handle specific API error messages
+            const errorMessage =
+              data.message || "Failed to send message. Please try again.";
+            showUserMessage("error", errorMessage);
+          }
+        } catch (fetchError) {
+          clearTimeout(timeoutId);
+
+          // Check if it's a timeout error
+          if (fetchError instanceof Error && fetchError.name === "AbortError") {
+            showUserMessage(
+              "error",
+              "Request timed out. Please check your connection and try again."
+            );
+            return;
+          }
+
+          throw fetchError; // Re-throw other errors to be handled by outer catch
         }
       } catch (error) {
-        // Handle network and API errors
-        console.error("❌ Contact form error:", error);
-
-        // Type-safe error handling
+        // Handle network and API errors with specific messages
         const errorMessage =
-          error instanceof Error ? error.message : "Unknown error";
+          error instanceof Error ? error.message : "Unknown error occurred";
 
-        // Show user-friendly error message
-        showUserMessage(
-          "error",
-          "Network error. Please check your connection and try again."
-        );
+        // Check for specific error types
+        if (
+          errorMessage.includes("fetch") ||
+          errorMessage.includes("network") ||
+          errorMessage.includes("Failed to fetch")
+        ) {
+          // Network connectivity issues
+          showUserMessage(
+            "error",
+            "Network connection failed. Please check your internet connection and try again."
+          );
+        } else if (errorMessage.includes("timeout")) {
+          showUserMessage(
+            "error",
+            "Request timed out. Please check your connection and try again."
+          );
+        } else if (
+          errorMessage.includes("CORS") ||
+          errorMessage.includes("cross-origin")
+        ) {
+          showUserMessage(
+            "error",
+            "Browser security blocked the request. Please try again or contact me directly."
+          );
+        } else if (
+          errorMessage.includes("HTTPS") ||
+          errorMessage.includes("mixed content")
+        ) {
+          showUserMessage(
+            "error",
+            "Security error. Please ensure you're using HTTPS and try again."
+          );
+        } else {
+          // Show the specific error message from the API
+          showUserMessage("error", errorMessage);
+        }
       } finally {
         // Always stop loading state
         setIsSubmitting(false);
