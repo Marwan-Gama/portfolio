@@ -4,6 +4,13 @@
  * This file imports all component styles and provides global styles
  */
 
+/* Import component styles - MUST be at the top */
+@import "./components/Home.css";
+@import "./components/Navbar.css";
+@import "./components/About.css";
+@import "./components/Projects.css";
+@import "./components/Contact.css";
+
 /* App-level styles */
 .app {
   min-height: 100vh;
@@ -13,13 +20,6 @@
 .main-content {
   min-height: calc(100vh - 80px); /* Adjust based on navbar height */
 }
-
-/* Import component styles */
-@import "./components/Home.css";
-@import "./components/Navbar.css";
-@import "./components/About.css";
-@import "./components/Projects.css";
-@import "./components/Contact.css";
 
 /* Global Styles */
 * {
