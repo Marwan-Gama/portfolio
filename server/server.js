@@ -121,6 +121,12 @@ app.use((error, req, res, next) => {
  * Establishes connection to MongoDB with error handling and logging
  */
 const connectDB = async () => {
+  // Skip MongoDB connection for testing purposes
+  if (!process.env.MONGODB_URI) {
+    console.log("⚠️  MongoDB URI not found, running in test mode without database");
+    return;
+  }
+
   try {
     console.log("🔌 Connecting to MongoDB...");
     console.log(
@@ -157,7 +163,7 @@ const connectDB = async () => {
       console.error("   - Port and host configuration");
     }
 
-    process.exit(1);
+    console.log("⚠️  Continuing without database connection for testing");
   }
 };
 
@@ -192,19 +198,24 @@ startServer();
 const gracefulShutdown = (signal) => {
   console.log(`\n${signal} received, shutting down gracefully`);
 
-  // Close MongoDB connection
-  mongoose.connection.close(() => {
-    console.log("✅ MongoDB connection closed");
-    process.exit(0);
-  });
+  // Close MongoDB connection if it exists
+  if (mongoose.connection.readyState !== 0) {
+    mongoose.connection.close(() => {
+      console.log("✅ MongoDB connection closed");
+      process.exit(0);
+    });
 
-  // Force exit after 10 seconds if graceful shutdown fails
-  setTimeout(() => {
-    console.error(
-      "❌ Could not close connections in time, forcefully shutting down"
-    );
-    process.exit(1);
-  }, 10000);
+    // Force exit after 10 seconds if graceful shutdown fails
+    setTimeout(() => {
+      console.error(
+        "❌ Could not close connections in time, forcefully shutting down"
+      );
+      process.exit(1);
+    }, 10000);
+  } else {
+    console.log("✅ No database connection to close");
+    process.exit(0);
+  }
 };
 
 // Handle different termination signals

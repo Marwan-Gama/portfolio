@@ -1,6 +1,6 @@
 import express from "express";
 import rateLimit from "express-rate-limit";
-import Contact from "../models/Contact.js";
+// import Contact from "../models/Contact.js";
 
 const router = express.Router();
 
@@ -38,46 +38,56 @@ router.post("/", contactLimiter, async (req, res) => {
       });
     }
 
-    // Create new contact submission
-    const contact = new Contact({
+    // For testing purposes, log the contact submission instead of saving to database
+    console.log("📧 New contact submission:", {
       name: name.trim(),
       email: email.trim().toLowerCase(),
       message: message.trim(),
       ipAddress: req.ip || req.connection.remoteAddress,
       userAgent: req.get("User-Agent"),
+      timestamp: new Date().toISOString(),
     });
 
-    await contact.save();
+    // Create new contact submission (commented out for testing)
+    // const contact = new Contact({
+    //   name: name.trim(),
+    //   email: email.trim().toLowerCase(),
+    //   message: message.trim(),
+    //   ipAddress: req.ip || req.connection.remoteAddress,
+    //   userAgent: req.get("User-Agent"),
+    // });
+
+    // await contact.save();
 
     res.status(201).json({
       success: true,
       message: "Message sent successfully! I'll get back to you soon.",
       data: {
-        id: contact._id,
-        name: contact.name,
-        email: contact.email,
-        createdAt: contact.createdAt,
+        id: Date.now(), // Temporary ID for testing
+        name: name.trim(),
+        email: email.trim().toLowerCase(),
+        createdAt: new Date().toISOString(),
       },
     });
   } catch (error) {
     console.error("Contact form error:", error);
 
-    // Handle MongoDB validation errors
-    if (error.name === "ValidationError") {
-      const messages = Object.values(error.errors).map((err) => err.message);
-      return res.status(400).json({
-        success: false,
-        message: messages.join(", "),
-      });
-    }
+    // Handle MongoDB validation errors (commented out for testing)
+    // if (error.name === "ValidationError") {
+    //   const messages = Object.values(error.errors).map((err) => err.message);
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: messages.join(", "),
+    //   });
+    // }
 
-    // Handle duplicate key errors
-    if (error.code === 11000) {
-      return res.status(400).json({
-        success: false,
-        message: "A message with this email already exists",
-      });
-    }
+    // Handle duplicate key errors (commented out for testing)
+    // if (error.code === 11000) {
+    //   return res.status(400).json({
+    //     success: false,
+    //     message: "A message with this email already exists",
+    //   });
+    // }
 
     res.status(500).json({
       success: false,
@@ -89,15 +99,16 @@ router.post("/", contactLimiter, async (req, res) => {
 // GET /api/contact - Get all contact submissions (for admin purposes)
 router.get("/", async (req, res) => {
   try {
-    const contacts = await Contact.find()
-      .sort({ createdAt: -1 })
-      .select("-__v")
-      .limit(100);
+    // For testing purposes, return empty array instead of database query
+    // const contacts = await Contact.find()
+    //   .sort({ createdAt: -1 })
+    //   .select("-__v")
+    //   .limit(100);
 
     res.json({
       success: true,
-      count: contacts.length,
-      data: contacts,
+      count: 0,
+      data: [],
     });
   } catch (error) {
     console.error("Get contacts error:", error);
