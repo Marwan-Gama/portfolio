@@ -365,7 +365,7 @@ const Contact = () => {
               <div className="social-links-grid">
                 {/* LinkedIn Link */}
                 <a
-                  href="https://linkedin.com/in/marwan-abu-gama"
+                  href="https://www.linkedin.com/in/marwan-gama/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="social-link-card linkedin"

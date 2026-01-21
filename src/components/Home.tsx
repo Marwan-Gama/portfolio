@@ -83,7 +83,7 @@ const Home = (): JSX.Element => {
                 <span className="name">Marwan Abu Gama</span>
               </h1>
 
-              <h2 className="professional-title">Junior Software Engineer</h2>
+              <h2 className="professional-title">Software Engineer</h2>
             </div>
 
             {/* Professional Action Buttons */}
