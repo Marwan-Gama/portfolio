@@ -55,6 +55,33 @@ const Home = (): JSX.Element => {
   const handleViewWork = (): void => handleNavigation("/projects");
   const handleContact = (): void => handleNavigation("/contact");
 
+  /**
+   * Handle CV download - opens PDF in new tab and triggers download
+   */
+  const handleDownloadCV = (): void => {
+    const cvPath = "/static/MarwanCV.pdf";
+    
+    // Open PDF in new tab
+    window.open(cvPath, "_blank", "noopener,noreferrer");
+    
+    // Trigger download as well
+    const link = document.createElement("a");
+    link.href = cvPath;
+    link.download = "MarwanCV.pdf";
+    link.style.display = "none";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    // Optional: Track download event if analytics are present
+    if (typeof window !== "undefined" && (window as any).gtag) {
+      (window as any).gtag("event", "download_cv", {
+        event_category: "engagement",
+        event_label: "CV Download",
+      });
+    }
+  };
+
   return (
     <div className="home-container">
       <div className="container">
@@ -114,6 +141,15 @@ const Home = (): JSX.Element => {
                 >
                   <span className="button-text">Contact Me</span>
                   <span className="button-icon">→</span>
+                </button>
+
+                <button
+                  onClick={handleDownloadCV}
+                  className="action-button download"
+                  aria-label="Download CV as PDF"
+                >
+                  <span className="button-text">Download CV</span>
+                  <span className="button-icon">⬇</span>
                 </button>
               </div>
             </div>
