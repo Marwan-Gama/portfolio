@@ -102,6 +102,17 @@ const Projects = (): JSX.Element => {
   const projects: Project[] = useMemo(
     () => [
       {
+        id: "CloudTask",
+        title: "Cloud Task is a web-based task management system",
+        description:
+          "Cloud Task is a PHP-based task management system using MySQL, deployed on AWS EC2 with Apache, managed via Git and secure SSH access..",
+        technologies: ["PHP", "MySQL", "AWS EC2", "Apache2" , "UserSpice Framework"],
+        image: "/images/CloudTask.png",
+        githubUrl: "https://github.com/Marwan-Gama/CloudTask",
+        liveUrl: "https://cloud-tasks.duckdns.org/login.php",
+        featured: true,
+      },
+      {
         id: "learn-up",
         title: "Learn Up - Graduation Project",
         description:
@@ -112,35 +123,8 @@ const Projects = (): JSX.Element => {
         liveUrl: "",
         featured: true,
       },
-      {
-        id: "compiler-design",
-        title: "Designing Compiler",
-        description:
-          "Learned about lexical analysis, parsing, code generation, and optimization techniques. Built my own compiler using C++, C, and other tools (lex, yacc).",
-        technologies: ["C++", "C", "Lex", "Yacc", "Compiler Design"],
-        image: "/images/compiler.jpg",
-        githubUrl: "",
-        liveUrl: "",
-        featured: true,
-      },
-      {
-        id: "web-app-development",
-        title: "Web Application Development",
-        description:
-          "Built a full-stack web app using ASP.NET MVC, C#, .NET Core, and SQL Server. Applied agile practices with Scrum, Git, JIRA, and CI/CD using Jenkins.",
-        technologies: [
-          "ASP.NET MVC",
-          "C#",
-          ".NET Core",
-          "SQL Server",
-          "Jenkins",
-          "JIRA",
-        ],
-        image: "/images/web-app.jpg",
-        githubUrl: "",
-        liveUrl: "",
-        featured: false,
-      },
+      
+      
       {
         id: "siraj-ojt-project",
         title: "Siraj OJT Program Project",
@@ -160,22 +144,7 @@ const Projects = (): JSX.Element => {
         liveUrl: "",
         featured: false,
       },
-      {
-        id: "ibtikar-app",
-        title: "Ibtikar Program App",
-        description:
-          "A research and development program in technology and education. Researched the job market and target audience, developed an app using No-Code technology (Bubble.io).",
-        technologies: [
-          "Bubble.io",
-          "No-Code",
-          "Market Research",
-          "UI/UX Design",
-        ],
-        image: "/images/ibtikar-app.jpg",
-        githubUrl: "",
-        liveUrl: "",
-        featured: false,
-      },
+      
     ],
     []
   );
