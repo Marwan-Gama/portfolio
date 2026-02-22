@@ -50,3 +50,8 @@ export interface ThemeConfig {
   background: string;
   text: string;
 }
+
+// Visits API response (GET and POST /api/visits)
+export interface VisitsApiResponse {
+  count: number;
+}

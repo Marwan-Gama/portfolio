@@ -208,6 +208,23 @@ select {
   border: 0;
 }
 
+/* Visitor counter (footer) */
+.app-footer {
+  padding: 0.5rem 1rem;
+  text-align: center;
+  border-top: 1px solid #e5e7eb;
+}
+.visitor-counter {
+  font-size: 0.875rem;
+  color: #6b7280;
+}
+.visitor-counter--loading {
+  opacity: 0.7;
+}
+.visitor-counter--error {
+  opacity: 0.5;
+}
+
 /* Print styles */
 @media print {
   .no-print {

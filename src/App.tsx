@@ -11,7 +11,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Analytics } from "@vercel/analytics/react";
 
 // Import components
-import { Navbar, Home, About, Projects, Contact } from "./components";
+import { Navbar, Home, About, Projects, Contact, VisitorCounter } from "./components";
 
 // Import global styles
 import "./styles/index.css";
@@ -41,6 +41,9 @@ function App(): JSX.Element {
             <Route path="/contact" element={<Contact />} />
           </Routes>
         </main>
+        <footer className="app-footer" aria-label="Site footer">
+          <VisitorCounter />
+        </footer>
       </Router>
       <Analytics />
     </div>
