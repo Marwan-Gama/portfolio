@@ -8,7 +8,6 @@
  */
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Analytics } from "@vercel/analytics/react";
 // Import components
 import {
   Navbar,
@@ -51,7 +50,6 @@ function App(): JSX.Element {
           <VisitorCounter />
         </footer>
       </Router>
-      <Analytics />
     </div>
   );
 }
