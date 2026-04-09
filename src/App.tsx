@@ -9,9 +9,15 @@
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { Analytics } from "@vercel/analytics/react";
-
 // Import components
-import { Navbar, Home, About, Projects, Contact, VisitorCounter } from "./components";
+import {
+  Navbar,
+  Home,
+  About,
+  Projects,
+  Contact,
+  VisitorCounter,
+} from "./components";
 
 // Import global styles
 import "./styles/index.css";
